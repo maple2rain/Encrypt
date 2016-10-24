@@ -132,10 +132,43 @@ void MainWindow::closeMatrix()
 
 void MainWindow::showEncrypt()
 {
+    if(!playfair)
+        delete playfair;
 
+    string textkey = QStoStr(textKey->text());
+    qDebug() << StrtoQSt(textkey);
+    letterFilter(textkey);
+    qDebug() << "string is";
+    qDebug() << StrtoQSt(textkey);
+    playfair = new PlayFair(textkey);
+
+    qDebug() << "begin to create table";
+    playtable->AddItem(*playfair);
+    qDebug() << "end of creating table";
+    string encryptText = QStoStr(textClear->toPlainText()) ;
+    playfair->encrypt(encryptText);
+    qDebug() << StrtoQSt(encryptText);
+    textCipher->setText(StrtoQSt(encryptText));
 }
 
 void MainWindow::showDeEncrypt()
 {
+    if(!playfair)
+        delete playfair;
+
+    string textkey = QStoStr(textKey->text());
+    qDebug() << StrtoQSt(textkey);
+    letterFilter(textkey);
+    qDebug() << "string is";
+    qDebug() << StrtoQSt(textkey);
+    playfair = new PlayFair(textkey);
+
+    qDebug() << "begin to create table";
+    playtable->AddItem(*playfair);
+    qDebug() << "end of creating table";
+    string DeEncryptText = QStoStr(textCipher->toPlainText()) ;
+    playfair->deEncrypt(DeEncryptText);
+    qDebug() << StrtoQSt(DeEncryptText);
+    textCipher->setText(StrtoQSt(DeEncryptText));
 
 }
