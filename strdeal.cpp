@@ -7,9 +7,25 @@ void str2lowstr(string &str)
 
     for(size_t i = 0; i < str.size(); ++i){
         char ch = str.at(i);
+        if(ch >= 'A' && ch <= 'Z')
+            tmp.push_back(ch + ('a' - 'A'));
+        else
+            tmp.push_back(ch);
+    }
+
+    str.swap(tmp);
+}
+
+void letterFilter(string &str)
+{
+    string tmp;
+    tmp.reserve(str.size());
+
+    for(size_t i = 0; i < str.size(); ++i){
+        char ch = str.at(i);
         if(ch >= 'a' && ch <= 'z')
             tmp.push_back(ch);
-        if(ch >= 'A' && ch <= 'Z')
+        else if(ch >= 'A' && ch <= 'Z')
             tmp.push_back(ch + ('a' - 'A'));
     }
 

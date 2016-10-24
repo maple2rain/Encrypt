@@ -1,9 +1,12 @@
 #include "playfair.h"
+#include "strdeal.h"
 #include <map>
 
 PlayFair::PlayFair(string key)
 {
     char letters[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+
+    keyMap.clear();
 
     for(int i = 0; i < key.size(); ++i){//创建矩阵首字符串键对
        keyMap.insert(make_pair(key.at(i), keyMap.size()));
@@ -43,13 +46,72 @@ PlayFair::PlayFair(string key)
         for(int j = 0; j < cols; ++j)
             qDebug() << keyArray[i][j];
 }
-const std::string& PlayFair::encrypt(const std::string &clear) const
-{
 
-    return clear;
+inline
+bool isLowLetter(char ch)//判断是否为小写字母
+{
+    return ch >= 'a' && ch <= 'z';
 }
 
-const std::string& PlayFair::deEncrypt(const std::string &cipher) const
+void CreateMatrixMap(map<char, int> &keyMap, map<char, pair<int, int>> &matrixMap)//根据keyMap创建矩阵关联容器
 {
-    return cipher;
+    matrixMap.clear();
+    for(auto it = keyMap.begin(); it != keyMap.end(); ++it){
+        matrixMap.insert(make_pair(it->first,
+                                   make_pair(it->second / (PlayFair::rows - 1), it->second / (PlayFair::cols - 1))));
+    }
+}
+
+void FairTransfer(char &ch1, char &ch2, map<char, pair<int, int>> &matrixMap)
+{
+    pair<int, int> pairCh1, pairCh2;
+    pairCh1 = matrixMap[ch1];
+    pairCh2 = matrixMap[ch2];
+
+}
+
+void PlayFair::encrypt(std::string &clear)
+{
+    string tmp;
+
+    if(clear.empty())
+        return ;
+
+    tmp.reserve(clear.size() * 2);//预分配空间
+    str2lowstr(clear);//首先转换为小写字母形式
+    map<char, pair<int, int>> matrixMap;
+    CreateMatrixMap(keyMap, matrixMap);//构建矩阵关联容器
+
+    for(size_t i = 0; i < clear.size(); ++i){
+        char ch = clear.at(i);
+        if(!isLowLetter(ch))
+            tmp.push_back(ch);//不处理非小写字母
+        else{
+            char ch2;
+
+            while(++i < clear.size() && !isLowLetter(ch2 = clear.at(i))){
+                tmp.push_back(ch2);//如果第一个字母为小写字母，之后的不是小写字母，则不进行处理
+            }
+
+            if(i < clear.size()){//当前还有剩余字母
+                if(ch2 == ch){//若两字母相同，则赋第二个字母为k，并且使计数字母i减1
+                    ch2 = 'k';
+                    --i;
+                }
+            }else{//没有剩余字母，则补充ch2为k
+                ch2 = 'k';
+            }
+
+            FairTransfer(ch, ch2, matrixMap);
+
+            /* 将两个字符添加进字符串 */
+            tmp.push_back(ch);
+            tmp.push_back(ch2);
+        }
+    }
+}
+
+void PlayFair::deEncrypt(std::string &cipher)
+{
+    ;
 }

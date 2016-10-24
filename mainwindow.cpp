@@ -114,7 +114,7 @@ void MainWindow::showMatrix()
         delete playfair;
     string textkey = QStoStr(textKey->text());
     qDebug() << StrtoQSt(textkey);
-    str2lowstr(textkey);
+    letterFilter(textkey);
     qDebug() << "string is";
     qDebug() << StrtoQSt(textkey);
     playfair = new PlayFair(textkey);

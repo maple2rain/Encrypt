@@ -13,8 +13,8 @@ public:
     PlayFair(string key = "");//形参为密钥
     ~PlayFair(){}
     
-    const std::string &encrypt(const std::string &clear) const;
-    const std::string &deEncrypt(const std::string &cipher) const;
+    void encrypt(std::string &clear);
+    void deEncrypt(std::string &cipher);
 
     inline
     char getKey(const int rows, const int cols) const//获取rows行cols列值
