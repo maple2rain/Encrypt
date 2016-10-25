@@ -12,8 +12,8 @@
 #include "table.h"
 #include "strdeal.h"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent, encryptType option) :
+    QMainWindow(parent), options(option)
 {
     QWidget *widget = new QWidget(this);
     this->setCentralWidget(widget);
@@ -61,6 +61,9 @@ MainWindow::MainWindow(QWidget *parent) :
     /* 显示单项按钮 */
     Playfair = new QRadioButton("Playfair", this);
     Hill = new QRadioButton("Hill", this);
+    connect(Playfair, &QRadioButton::clicked, this, &MainWindow::choosePlayfair);
+    connect(Hill, &QRadioButton::clicked, this, &MainWindow::chooseHill);
+
     QHBoxLayout *radioBtnHbox = new QHBoxLayout(this);
     radioBtnHbox->addWidget(Playfair, 1, Qt::AlignLeft);
     radioBtnHbox->addWidget(Hill, 1, Qt::AlignLeft);
@@ -108,7 +111,7 @@ MainWindow::~MainWindow()
         delete playtable;
 }
 
-void MainWindow::showMatrix()
+void MainWindow::showPlayfairMatrix(void)
 {
     if(!playfair)
         delete playfair;
@@ -125,12 +128,62 @@ void MainWindow::showMatrix()
     playtable->show();
 }
 
-void MainWindow::closeMatrix()
+void MainWindow::showHillMatrix(void)
+{
+
+}
+
+void MainWindow::showMatrix(void)
+{
+    switch (options) {
+    case PLAYFAIR:
+        showPlayfairMatrix();
+        break;
+    case HILL:
+        showHillMatrix();
+        break;
+    default:
+        qDebug() << "don't choose any algorithm";
+        break;
+    }
+}
+
+void MainWindow::closeMatrix(void)
 {
     playtable->close();
 }
 
-void MainWindow::showEncrypt()
+void MainWindow::showEncrypt(void)
+{
+    switch(options){
+    case PLAYFAIR:
+        encryptPlayfair();
+        break;
+    case HILL:
+        encryptHill();
+        break;
+    default:
+        qDebug() << "don't choose any algorithm";
+        break;
+    }
+}
+
+void MainWindow::showDeEncrypt(void)
+{
+    switch (options) {
+    case PLAYFAIR:
+        deEncryptPlayfair();
+        break;
+    case HILL:
+        deEncryptHill();
+        break;
+    default:
+        qDebug() << "don't choose any algorithm";
+        break;
+    }
+}
+
+void MainWindow::encryptPlayfair(void)
 {
     if(!playfair)
         delete playfair;
@@ -151,7 +204,7 @@ void MainWindow::showEncrypt()
     textCipher->setText(StrtoQSt(encryptText));
 }
 
-void MainWindow::showDeEncrypt()
+void MainWindow::deEncryptPlayfair(void)
 {
     if(!playfair)
         delete playfair;
@@ -170,5 +223,14 @@ void MainWindow::showDeEncrypt()
     playfair->deEncrypt(DeEncryptText);
     qDebug() << StrtoQSt(DeEncryptText);
     textClear->setText(StrtoQSt(DeEncryptText));
+}
 
+void MainWindow::encryptHill(void)
+{
+    ;
+}
+
+void MainWindow::deEncryptHill(void)
+{
+    ;
 }
