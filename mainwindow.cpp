@@ -169,6 +169,6 @@ void MainWindow::showDeEncrypt()
     string DeEncryptText = QStoStr(textCipher->toPlainText()) ;
     playfair->deEncrypt(DeEncryptText);
     qDebug() << StrtoQSt(DeEncryptText);
-    textCipher->setText(StrtoQSt(DeEncryptText));
+    textClear->setText(StrtoQSt(DeEncryptText));
 
 }

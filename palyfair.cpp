@@ -135,8 +135,8 @@ void PlayFair::encrypt(std::string &clear)
 
             /* 将两个字符和非字母字符串添加进字符串 */
             tmp.push_back(ch);
-            tmp.push_back(ch2);
             tmp += norLetter;
+            tmp.push_back(ch2);
         }
     }
     qDebug() << QString("tmp is ") << StrtoQSt(tmp);
@@ -180,8 +180,8 @@ void PlayFair::deEncrypt(std::string &cipher)
 
             /* 将两个字符和非字母字符串添加进字符串 */
             tmp.push_back(ch);
-            tmp.push_back(ch2);
             tmp += norLetter;
+            tmp.push_back(ch2);
         }
     }
     qDebug() << QString("tmp is ") << StrtoQSt(tmp);

@@ -16,9 +16,6 @@ public:
     void encrypt(std::string &clear);//加密算法
     void deEncrypt(std::string &cipher);//解密算法
 
-    void FairTransfer(char &ch1, char &ch2, map<char, pair<int, int>> &matrixMap);//playfair字符转换
-    void FairReturn(char &ch1, char &ch2, map<char, pair<int, int>> &matrixMap);//playfair字符回退
-
     inline
     char getKey(const int rows, const int cols) const//获取rows行cols列值
     {
@@ -38,7 +35,12 @@ public:
 
         return -1;
     }
-public:
+
+private:
+    void FairTransfer(char &ch1, char &ch2, map<char, pair<int, int>> &matrixMap);//playfair字符转换
+    void FairReturn(char &ch1, char &ch2, map<char, pair<int, int>> &matrixMap);//playfair字符回退
+
+   public:
     static const int rows = 6;
     static const int cols = 6;
 private:
