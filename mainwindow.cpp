@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent, encryptType option, unsigned char flag) 
 
     QCheckBox *readFile = new QCheckBox(tr("Read From File"), this);
     connect(readFile, &QCheckBox::stateChanged, this, &MainWindow::checkReadFile);
-    QCheckBox *writeFile = new QCheckBox(tr("Write to File"), this);
+    QCheckBox *writeFile = new QCheckBox(tr("Write To File"), this);
     connect(writeFile, &QCheckBox::stateChanged, this, &MainWindow::checkWriteFile);
 
     textKey = new QLineEdit(this);//设置密钥读取文本框
@@ -271,11 +271,15 @@ void MainWindow::encryptPlayfair(void)
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);
         playfair = new PlayFair(textkey);
+
+        /* 添加实例填充表格并显示 */
+        playtable->AddItem(*playfair);
     }
 
     /* 加密及显示 */
     playfair->encrypt(encryptText);
     textCipher->setText(StrtoQSt(encryptText));
+
 }
 
 void MainWindow::deEncryptPlayfair(void)
@@ -295,6 +299,9 @@ void MainWindow::deEncryptPlayfair(void)
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);
         playfair = new PlayFair(textkey);
+
+        /* 添加实例填充表格并显示 */
+        playtable->AddItem(*playfair);
     }
 
     /* 解密及显示 */

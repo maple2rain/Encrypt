@@ -45,7 +45,7 @@ Playfair加密方法是先将明文按两个字母一组进行分组，然后在
 2. 若密文字母在矩阵中同列，则循环取其下边字母为密文（如*KT*被加密为*EK*）
 3. 若密文字母在矩阵中不同行不同列，则取其同行且与下一字母同列的字母为密文（如*EA*被加密为*IM*）
 
-### 2.1 实践
+### 1.3 实践
 
 明白了算法原理后，就可以亲手实践一个加密解密的小程序了。
 在动手之前，首先是考虑如何高效的字母矩阵中找到对应的字母。
@@ -175,5 +175,58 @@ void PlayFair::encrypt(std::string &clear)
 }
 ```
 
-解密过程与加密过程一致，只不过将33行的转换字符方法*FairTranser*改为返回字符方法*FairReturn*。*FairReturn*方法可根据解密原理参照*FairTranser*方法进行修改。
+解密过程与加密过程一致，只不过将33行的转换字符方法*FairTranser*改为返回字符方法*FairReturn*。*FairReturn*方法可根据解密原理参照*FairTranser*方法进行修改。详细可参考[playfair.cpp](https://github.com/maple2snow/Encrypt/blob/master/palyfair.cpp).
 
+### 1.4 演示
+
+此部分用于显示我的小程序成果，简单介绍功能部分，如无需进一步了解该算法的朋友可以绕过此节。
+该程序基于`QT5开发框架`，运行环境为`windows`。
+
+- 初始界面
+	
+	程序的初始界面如下图所示，左上角的`Algorithm Frame`为算法选取框，在这里，可以选取的算法有`Playfair`以及即将要介绍的`Hill`算法。算法选取框下面是`Options`框，用于选择是否从文件中读取及是否向文件中写入结果。而在下方的`Button`框，则用于执行**加密**、**解密**、**查看更多信息**及**关闭更多信息**功能。最下方的则是作者的一些介绍。
+	右侧的`Key`则是用于填入生成算法矩阵的密钥，如若不填充，则默认以字母序填充矩阵。
+
+	<div align=center>
+	<img src="http://i.imgur.com/9ngkw59.png" title="初始界面" />
+	</div>
+
+- 输入密钥并生成矩阵
+
+	在选择了`Playfair`算法后，在`Key`处输入密钥*maple*，并点击`More Info`按钮后，即可显示算法矩阵，如下图所示。（当然，如果你没有选择任何一个算法就想显示更多信息的话，是会弹出一个提醒框，表示你没有选择任何算法的，在此不做篇幅介绍）
+
+	<div align=center>
+	<img src="http://i.imgur.com/1S8srca.png" title="输入密钥并生成矩阵" />
+	</div>
+
+- 加密
+
+	在`Operation`框中，有表示明文的`Clear Text`和密文的`Cipher Text`文本输入框，当向进行加密时，可以在明文框输入明文，在点击加密按钮`Encrypt`后，加密后的明文将会出现在密文框，如下图所示，明文<font color = green>I love maple in autumn!</font>被加密为密文<font color = red>k aqum aplem jh mvozeh!</font>
+	
+	<div align=center>
+	<img src="http://i.imgur.com/uxbHuAv.png" title="加密" />
+	</div>
+
+- 解密
+
+	如果看到上述那句话，一般人当然会意思不明所以，而这就需要进行解密了，直接点击解密按钮`Decrypt`，则可以将密文解密并放置于明文框中。如下图所示，密文被解密为<font color = deep green>i</font><font color = green> love maple in autumn!</font>。可以看到大写*I*被改为了小写*i*，这是因为算法矩阵是填充了小写字母的缘故，所有字母都会被相应的小写字母所替代。
+
+	<div align=center>
+	<img src="http://i.imgur.com/YCWtz78.png" title="解密" />
+	</div>
+
+- 从文件中读取并写入文件
+
+	当勾选了复选框`Read From File`及`Write To File`后（也可以只选其中一个执行部分功能）就可以从文件中读取明文进行加密并将密文存储于文件中。点击加密按钮后便会出现文件选择框，在此，读取一份名为`poem.txt`的文件，里面是一首诗，接下来查看加密情况和加密文件，如下图所示，加密文件被读取到明文框，密文被显示到密文框。
+
+	<div align=center>
+	<img src="http://i.imgur.com/w7QFmrs.png" title="加密文件" />
+	</div>
+
+	而在点击解密后，也可以将加密文件进行解密并保存在明文文件中，明文同样会被显示到明文框，只不过所有字母都被改为小写，并可能出现在出现同组字母为相同时添加额外字母或最后一个分组只有一个字母的情况，此时都会多补充一个字母'k'。如下图所示。
+	
+	<div align=center>
+	<img src="http://i.imgur.com/Uz6SFYR.png" title="解密文件" />
+	</div>
+
+## 2 Hill算法
