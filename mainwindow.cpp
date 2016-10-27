@@ -22,8 +22,7 @@ MainWindow::MainWindow(QWidget *parent, encryptType option, unsigned char flag) 
     QWidget *widget = new QWidget(this);
     this->setCentralWidget(widget);
     this->setWindowTitle("Encryption");
-    this->setWindowIcon(QIcon(":images/icon.png"));
-
+    this->setWindowIcon(QIcon("images/icon.png"));
 
     QPushButton *encryptBtn = new QPushButton(tr("Encrypt"), this);//设置显示矩阵按钮
     connect(encryptBtn, &QPushButton::clicked, this, &MainWindow::showEncrypt);

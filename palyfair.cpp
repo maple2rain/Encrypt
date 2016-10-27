@@ -30,7 +30,7 @@ PlayFair::PlayFair(string key)
     qDebug() << "矩阵赋值并输出对应字符";
     for(size_t i = 0; i < keyMap.size(); ++i){
         char ch = 'a' + i;
-        keyArray[ (size_t)(keyMap[ch] / 5) ][ keyMap[ch] % 5 ] = ch;
+        keyArray[ keyMap[ch] / 5 ][ keyMap[ch] % 5 ] = ch;
         qDebug() << (size_t)(keyMap[ch] / 5) << " " << keyMap[ch] % 5;
     }
 
@@ -57,6 +57,7 @@ void CreateMatrixMap(map<char, size_t> &keyMap, map<char, pair<size_t, size_t>> 
                                    make_pair(it->second / (PlayFair::rows - 1), it->second % (PlayFair::cols - 1))));
     }
 }
+
 void PlayFair::FairReturn(char &ch1, char &ch2, map<char, pair<size_t, size_t>> &matrixMap)
 {
     pair<size_t, size_t> pairCh1, pairCh2;
@@ -97,8 +98,7 @@ void PlayFair::encrypt(std::string &clear)
 {
     string tmp;
 
-    if(clear.empty())
-        return ;
+    if(clear.empty()) return ;
 
     qDebug() << QString("clear is") << StrtoQSt(clear);
     tmp.reserve(clear.size() * 2);//预分配空间

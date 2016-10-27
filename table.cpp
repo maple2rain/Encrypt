@@ -32,6 +32,7 @@ void PlayTable::AddItem(HillEnc &hill)
 {
     this->setRowCount(HillEnc::rows);
     this->setColumnCount(HillEnc::cols * 2 + 1);
+    this->clear();
 
     /* 填充表格 */
     for(size_t i = 0; i != HillEnc::rows; ++i){
