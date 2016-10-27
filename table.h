@@ -1,9 +1,10 @@
-#ifndef TABLE_H
+﻿#ifndef TABLE_H
 #define TABLE_H
 
 #include <QWidget>
 #include <QTableWidget>
 #include "playfair.h"
+#include "hill.h"
 
 class PlayFair;
 
@@ -15,6 +16,7 @@ public:
 
     void AddItem(char *array);
     void AddItem(PlayFair &playfair);
+    void AddItem(HillEnc &hill);
 };
 
 #endif // TABLE_H

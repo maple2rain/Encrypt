@@ -13,15 +13,24 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     palyfair.cpp \
     table.cpp \
-    strdeal.cpp
+    strdeal.cpp \
+    hill.cpp \
+    mainwindow.cpp
 
 HEADERS  += mainwindow.h \
     table.h \
     playfair.h \
     strdeal.h \
-    encrypt.h
+    encrypt.h \
+    hill.h \
+    matrix.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    res.qrc
+
+RC_FILE += \
+	myico.rc

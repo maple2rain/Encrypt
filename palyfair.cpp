@@ -1,4 +1,4 @@
-#include "playfair.h"
+﻿#include "playfair.h"
 #include "strdeal.h"
 #include <map>
 
@@ -8,10 +8,10 @@ PlayFair::PlayFair(string key)
 
     keyMap.clear();
 
-    for(int i = 0; i < key.size(); ++i){//创建矩阵首字符串键对
+    for(size_t i = 0; i < key.size(); ++i){//创建矩阵首字符串键对
        keyMap.insert(make_pair(key.at(i), keyMap.size()));
     }
-    for(int i = 0; i < 26; ++i){//创建剩余键对
+    for(size_t i = 0; i < 26; ++i){//创建剩余键对
         keyMap.insert(make_pair(letters[i], keyMap.size()));
     }
 
@@ -28,32 +28,28 @@ PlayFair::PlayFair(string key)
     }
 
     qDebug() << "矩阵赋值并输出对应字符";
-    for(int i = 0; i < keyMap.size(); ++i){
+    for(size_t i = 0; i < keyMap.size(); ++i){
         char ch = 'a' + i;
-        keyArray[ (int)(keyMap[ch] / 5) ][ keyMap[ch] % 5 ] = ch;
-        qDebug() << (int)(keyMap[ch] / 5) << " " << keyMap[ch] % 5;
+        keyArray[ (size_t)(keyMap[ch] / 5) ][ keyMap[ch] % 5 ] = ch;
+        qDebug() << (size_t)(keyMap[ch] / 5) << " " << keyMap[ch] % 5;
     }
 
     qDebug() << "将最后一行和最后一列赋值为与首行和首列相同";
     //虽然两部分可以合并在一个循环体内，因为rows与cols相同，但为了可读性，则用这种方法，并且这种方法仅是增加了i的赋值与判断而已
-    for(int i = 0; i < rows; ++i)
+    for(size_t i = 0; i < rows; ++i)
         keyArray[i][cols - 1] = keyArray[i][0];
-    for(int i = 0; i < cols; ++i)
+    for(size_t i = 0; i < cols; ++i)
         keyArray[rows - 1][i] = keyArray[0][i];
 
     qDebug() << "输出矩阵信息";
-    for(int i = 0; i < rows; ++i)
-        for(int j = 0; j < cols; ++j)
+    for(size_t i = 0; i < rows; ++i)
+        for(size_t j = 0; j < cols; ++j)
             qDebug() << keyArray[i][j];
 }
 
-inline
-bool isLowLetter(char ch)//判断是否为小写字母
-{
-    return ch >= 'a' && ch <= 'z';
-}
 
-void CreateMatrixMap(map<char, int> &keyMap, map<char, pair<int, int>> &matrixMap)//根据keyMap创建矩阵关联容器
+
+void CreateMatrixMap(map<char, size_t> &keyMap, map<char, pair<size_t, size_t>> &matrixMap)//根据keyMap创建矩阵关联容器
 {
     matrixMap.clear();
     for(auto it = keyMap.begin(); it != keyMap.end(); ++it){
@@ -61,9 +57,9 @@ void CreateMatrixMap(map<char, int> &keyMap, map<char, pair<int, int>> &matrixMa
                                    make_pair(it->second / (PlayFair::rows - 1), it->second % (PlayFair::cols - 1))));
     }
 }
-void PlayFair::FairReturn(char &ch1, char &ch2, map<char, pair<int, int>> &matrixMap)
+void PlayFair::FairReturn(char &ch1, char &ch2, map<char, pair<size_t, size_t>> &matrixMap)
 {
-    pair<int, int> pairCh1, pairCh2;
+    pair<size_t, size_t> pairCh1, pairCh2;
     pairCh1 = matrixMap[ch1];
     pairCh2 = matrixMap[ch2];
 
@@ -72,16 +68,16 @@ void PlayFair::FairReturn(char &ch1, char &ch2, map<char, pair<int, int>> &matri
         ch2 = keyArray[pairCh2.first][(pairCh2.second + (cols - 1) - 1) % (cols - 1)];
     }else if(pairCh1.second == pairCh2.second){//列与列相等
         ch1 = keyArray[(pairCh1.first + (rows - 1) - 1) % (rows - 1)][pairCh1.second];
-        ch2 = keyArray[(pairCh1.first + (rows - 1) - 1) % (rows - 1)][pairCh2.second];
+        ch2 = keyArray[(pairCh2.first + (rows - 1) - 1) % (rows - 1)][pairCh2.second];
     }else{//不同行列
         ch1 = keyArray[pairCh1.first][pairCh2.second];
         ch2 = keyArray[pairCh2.first][pairCh1.second];
     }
 }
 
-void PlayFair::FairTransfer(char &ch1, char &ch2, map<char, pair<int, int>> &matrixMap)
+void PlayFair::FairTransfer(char &ch1, char &ch2, map<char, pair<size_t, size_t>> &matrixMap)
 {
-    pair<int, int> pairCh1, pairCh2;
+    pair<size_t, size_t> pairCh1, pairCh2;
     pairCh1 = matrixMap[ch1];
     pairCh2 = matrixMap[ch2];
 
@@ -107,7 +103,7 @@ void PlayFair::encrypt(std::string &clear)
     qDebug() << QString("clear is") << StrtoQSt(clear);
     tmp.reserve(clear.size() * 2);//预分配空间
     str2lowstr(clear);//首先转换为小写字母形式
-    map<char, pair<int, int>> matrixMap;
+    map<char, pair<size_t, size_t>> matrixMap;
     CreateMatrixMap(keyMap, matrixMap);//构建矩阵关联容器
 
     for(size_t i = 0; i < clear.size(); ++i){
@@ -152,7 +148,7 @@ void PlayFair::deEncrypt(std::string &cipher)
 
     qDebug() << QString("cipher is") << StrtoQSt(cipher);
     tmp.reserve(cipher.size());//预分配空间
-    map<char, pair<int, int>> matrixMap;
+    map<char, pair<size_t, size_t>> matrixMap;
     CreateMatrixMap(keyMap, matrixMap);//构建矩阵关联容器
 
     for(size_t i = 0; i < cipher.size(); ++i){

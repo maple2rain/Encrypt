@@ -1,4 +1,4 @@
-#include "strdeal.h"
+﻿#include "strdeal.h"
 
 void str2lowstr(string &str)
 {
@@ -41,4 +41,9 @@ QString StrtoQSt(const string &s)//将string转换为QString
 {
 
    return QString(QString::fromLocal8Bit(s.c_str()));
+}
+
+bool isLowLetter(char ch)//判断是否为小写字母
+{
+    return ch >= 'a' && ch <= 'z';
 }

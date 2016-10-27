@@ -10,14 +10,14 @@ using namespace std;
 
 class PlayFair : public Encrypt{
 public:
-    PlayFair(string key = "");//å½¢å‚ä¸ºå¯†é’¥
+    PlayFair(string key = "");//ĞÎ²ÎÎªÃÜÔ¿
     ~PlayFair(){}
     
-    void encrypt(std::string &clear);//åŠ å¯†ç®—æ³•
-    void deEncrypt(std::string &cipher);//è§£å¯†ç®—æ³•
+    void encrypt(std::string &clear);//¼ÓÃÜËã·¨
+    void deEncrypt(std::string &cipher);//½âÃÜËã·¨
 
     inline
-    char getKey(const int rows, const int cols) const//è·å–rowsè¡Œcolsåˆ—å€¼
+    char getKey(const size_t rows, const size_t cols) const//»ñÈ¡rowsĞĞcolsÁĞÖµ
     {
         if(rows < 1 || rows > PlayFair::rows
             || cols < 1 || cols > PlayFair::cols)
@@ -27,7 +27,7 @@ public:
     }
 
     inline
-    int getKeyValue(char key) const//è·å–å…³é”®å­—keyçš„å€¼
+    size_t getKeyValue(char key) const//»ñÈ¡¹Ø¼ü×ÖkeyµÄÖµ
     {
         auto it = keyMap.find(key);
         if(it != keyMap.end())
@@ -37,18 +37,15 @@ public:
     }
 
 private:
-    void FairTransfer(char &ch1, char &ch2, map<char, pair<int, int>> &matrixMap);//playfairå­—ç¬¦è½¬æ¢
-    void FairReturn(char &ch1, char &ch2, map<char, pair<int, int>> &matrixMap);//playfairå­—ç¬¦å›é€€
+    void FairTransfer(char &ch1, char &ch2, map<char, pair<size_t, size_t> > &matrixMap);//playfair×Ö·û×ª»»
+    void FairReturn(char &ch1, char &ch2, map<char, pair<size_t, size_t>> &matrixMap);//playfair×Ö·û»ØÍË
 
    public:
-    static const int rows = 6;
-    static const int cols = 6;
+    static const size_t rows = 6;
+    static const size_t cols = 6;
 private:
     char keyArray[rows][cols];
-    map<char, int> keyMap;
+    map<char, size_t> keyMap;
 };
-
-
-
 
 #endif // PLAYFIAR_H

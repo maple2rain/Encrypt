@@ -1,4 +1,4 @@
-#ifndef ENCRYPT_H
+﻿#ifndef ENCRYPT_H
 #define ENCRYPT_H
 
 #include <string>
