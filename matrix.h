@@ -18,7 +18,7 @@ bool CreateInvMatrix(Array const &in_, Array &out){
     typedef typename matrix_size<Array>::type type;
     size_t const n = matrix_size<Array>::size;
     Array in;
-    // 复制输入，并初始化out
+    /* 复制输入，并初始化out */
     for (size_t i = 0; i != n; ++i) {
         for (size_t j = 0; j != n; ++j) {
             in[i][j] = in_[i][j];
@@ -29,7 +29,7 @@ bool CreateInvMatrix(Array const &in_, Array &out){
 
     type tmp = 1;
     for (size_t c = 0; c != n; ++c) {
-        // 选取列主元，这样算法更稳定
+        /* 选取列主元，避免出现in[c][c]为0或过小导致商溢出的情形 */
         size_t pivot = 0;
         type maximum = 0;
         for (size_t r = c; r != n; ++r) {
@@ -41,11 +41,11 @@ bool CreateInvMatrix(Array const &in_, Array &out){
         }
         if (maximum == 0) return false;// 不可逆
 
-                                       // 交换c, rr两行
+        /* 交换c, pivot两行 */
         for (size_t i = c; i != n; ++i) std::swap(in[c][i], in[pivot][i]);
         for (size_t i = 0; i != n; ++i) std::swap(out[c][i], out[pivot][i]);
 
-        // 正规化
+        /* 正规化 */
         for (size_t i = c + 1; i != n; ++i) {
             in[c][i] /= in[c][c];
         }
@@ -65,13 +65,18 @@ bool CreateInvMatrix(Array const &in_, Array &out){
         }
     }
 
-    tmp *= 3 * 3;//hill矩阵所用，正常是不用的
+    tmp *= 9;
+    //在上述的密钥中，为了将行列式值修改为26互质，
+    //故需乘上倍数因子9，具体数值可在恢复为整数后，
+    //再通过求行列式值与26的最大公约数为1的方法，
+    //不断改变倍数因子以获得
+    
+    /* 将小数恢复为整数 */
     for (size_t i = 0; i != n; ++i)
         for (size_t j = 0; j != n; ++j)
             out[i][j] *= tmp;
 
     return true;
 }
-
 
 #endif // MATRIX_H
