@@ -12,6 +12,7 @@
 #include <QGroupBox>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <memory>
 #include "../include/playfair.h"
 #include "../include/table.h"
 #include "../include/strdeal.h"
@@ -131,19 +132,14 @@ MainWindow::MainWindow(QWidget *parent, encryptType option, unsigned char flag) 
     widget->setLayout(hbox);
 
     playtable->close();
-    playfair = new PlayFair;
-    hill = new HillEnc;
-    rsa = new RSA(3, 11);
+    playfair = std::make_shared<PlayFair>();
+    hill = std::make_shared<HillEnc>();
+    rsa = std::make_shared<RSA>(3, 11);
 }
 
 MainWindow::~MainWindow()
 {
-    if(!playfair)
-        delete playfair;
-    if(!Hill)
-        delete Hill;
-    if(!playtable)
-        delete playtable;
+
 }
 
 void MainWindow::showPlayfairMatrix(void)
@@ -154,11 +150,8 @@ void MainWindow::showPlayfairMatrix(void)
         letterFilter(textkey);//过滤密钥非字母
         qDebug() << "string is";
         qDebug() << StrtoQSt(textkey);
-        if(!playfair){
-            delete playfair;
-            playfair = nullptr;
-        }
-        playfair = new PlayFair(textkey);
+        playfair = std::make_shared<PlayFair>(textkey);
+        textKey->setModified(false);
     }
 
     /* 添加实例填充表格并显示 */
@@ -172,15 +165,10 @@ void MainWindow::showHillMatrix(void)
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);//将密钥过滤非字母
 
-        if(!hill){
-            delete hill;
-            hill = nullptr;
-        }
-
         if(textkey.empty())
-            hill = new HillEnc;
+            hill = std::make_shared<HillEnc>();
         else
-            hill = new HillEnc(textkey);
+            hill = std::make_shared<HillEnc>(textkey);
 
         if(!hill->available()){
             QMessageBox::warning(this, tr("Warning"), tr("You did not input an valid key."));
@@ -197,18 +185,15 @@ void MainWindow::showHillMatrix(void)
 void MainWindow::showRSAMatrix(void)
 {
     if(textKey->isModified()){
-        delete rsa;
-
         string textkey = QStoStr(textKey->text());
         vector<long> vec;
         analyzeStr2Num(textkey, vec);
-
         if(vec.size() > 1){
-            rsa = new RSA(vec[0], vec[1]);
+            rsa = std::make_shared<RSA>(vec[0], vec[1]);
         }else if(vec.size() == 1){
-            rsa = new RSA(vec[0]);
+            rsa = std::make_shared<RSA>(vec[0]);
         }else{
-            rsa = new RSA(3, 11);
+             rsa = std::make_shared<RSA>(3, 11);
         }
         textKey->setModified(false);
     }
@@ -300,18 +285,16 @@ void MainWindow::encryptRSA(void)
     }
 
     if(textKey->isModified()){
-        delete rsa;
-
         string textkey = QStoStr(textKey->text());
         vector<long> vec;
         analyzeStr2Num(textkey, vec);
 
         if(vec.size() > 1){
-            rsa = new RSA(vec[0], vec[1]);
+            rsa = std::make_shared<RSA>(vec[0], vec[1]);
         }else if(vec.size() == 1){
-            rsa = new RSA(vec[0]);
+            rsa = std::make_shared<RSA>(vec[0]);
         }else{
-            rsa = new RSA(3, 11);
+             rsa = std::make_shared<RSA>(3, 11);
         }
         textKey->setModified(false);
 
@@ -336,18 +319,16 @@ void MainWindow::deEncryptRSA()
     }
 
     if(textKey->isModified()){
-        delete rsa;
-
         string textkey = QStoStr(textKey->text());
         vector<long> vec;
         analyzeStr2Num(textkey, vec);
 
         if(vec.size() > 1){
-            rsa = new RSA(vec[0], vec[1]);
+            rsa = std::make_shared<RSA>(vec[0], vec[1]);
         }else if(vec.size() == 1){
-            rsa = new RSA(vec[0]);
+            rsa = std::make_shared<RSA>(vec[0]);
         }else{
-            rsa = new RSA(3, 11);
+             rsa = std::make_shared<RSA>(3, 11);
         }
 
         textKey->setModified(false);
@@ -373,11 +354,9 @@ void MainWindow::encryptPlayfair(void)
     }
 
     if(textKey->isModified()){
-        delete playfair;
-
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);
-        playfair = new PlayFair(textkey);
+        playfair = std::make_shared<PlayFair>();
 
         /* 添加实例填充表格并显示 */
         playtable->AddItem(*playfair);
@@ -399,11 +378,9 @@ void MainWindow::deEncryptPlayfair(void)
     }
 
     if(textKey->isModified()){
-        delete playfair;
-
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);
-        playfair = new PlayFair(textkey);
+        playfair = std::make_shared<PlayFair>();
 
         /* 添加实例填充表格并显示 */
         playtable->AddItem(*playfair);
@@ -427,12 +404,10 @@ void MainWindow::encryptHill(void)
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);
 
-        delete hill;
-
         if(textkey.empty())
-            hill = new HillEnc;
+            hill = std::make_shared<HillEnc>();
         else
-            hill = new HillEnc(textkey);
+            hill = std::make_shared<HillEnc>(textkey);
 
         if(!hill->available()){
             QMessageBox::warning(this, tr("Warning"), tr("You did not input an valid key."));
@@ -455,15 +430,13 @@ void MainWindow::deEncryptHill(void)
     }
 
     if(textKey->isModified()){
-        delete hill;
-
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);//过滤密钥非字母
 
         if(textkey.empty())
-            hill = new HillEnc;
+            hill = std::make_shared<HillEnc>();
         else
-            hill = new HillEnc(textkey);
+            hill = std::make_shared<HillEnc>(textkey);
 
         if(!hill->available()){
             QMessageBox::warning(this, tr("Warning"), tr("You did not input an valid key."));

@@ -6,6 +6,7 @@
 #include <QTextEdit>
 #include <QRadioButton>
 #include <QDebug>
+#include <memory>
 #include "table.h"
 #include "playfair.h"
 #include "hill.h"
@@ -71,9 +72,9 @@ private:
     QTextEdit       *textClear;
     QTextEdit       *textCipher;
     QLineEdit       *textKey;
-    PlayFair        *playfair;
-    HillEnc         *hill;
-    RSA             *rsa;
+    shared_ptr<PlayFair> playfair;
+    shared_ptr<HillEnc> hill;
+    shared_ptr<RSA> rsa;
     PlayTable       *playtable;
 };
 
