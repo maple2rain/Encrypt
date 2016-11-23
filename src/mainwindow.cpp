@@ -1,4 +1,4 @@
-﻿#include "mainwindow.h"
+﻿#include "../include/mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QPushButton>
 #include <QTextEdit>
@@ -12,9 +12,9 @@
 #include <QGroupBox>
 #include <QMessageBox>
 #include <QFileDialog>
-#include "playfair.h"
-#include "table.h"
-#include "strdeal.h"
+#include "../include/playfair.h"
+#include "../include/table.h"
+#include "../include/strdeal.h"
 
 MainWindow::MainWindow(QWidget *parent, encryptType option, unsigned char flag) :
     QMainWindow(parent), options(option), rwFileFlag(flag)
@@ -71,15 +71,18 @@ MainWindow::MainWindow(QWidget *parent, encryptType option, unsigned char flag) 
     /* 显示单项按钮 */
     Playfair = new QRadioButton("Playfair", this);
     Hill = new QRadioButton("Hill", this);
+    Rsa = new QRadioButton("RSA", this);
     connect(Playfair, &QRadioButton::clicked, this, &MainWindow::choosePlayfair);
     connect(Hill, &QRadioButton::clicked, this, &MainWindow::chooseHill);
+    connect(Rsa, &QRadioButton::clicked, this, &MainWindow::chooseRSA);
 
-    QHBoxLayout *radioBtnHbox = new QHBoxLayout(this);
-    radioBtnHbox->addWidget(Playfair, 1, Qt::AlignLeft);
-    radioBtnHbox->addWidget(Hill, 1, Qt::AlignLeft);
+    QGridLayout *radioBtnGbox = new QGridLayout(this);
+    radioBtnGbox->addWidget(Playfair, 0, 0);
+    radioBtnGbox->addWidget(Hill, 0, 1);
+    radioBtnGbox->addWidget(Rsa, 1, 0);
 
     QGroupBox *radioBtnGBox = new QGroupBox(tr("Algorithm Frame"), this);
-    radioBtnGBox->setLayout(radioBtnHbox);
+    radioBtnGBox->setLayout(radioBtnGbox);
 
     /* 添加读取文件可选项 */
     QVBoxLayout *rwOptVBox = new QVBoxLayout(this);
@@ -130,6 +133,7 @@ MainWindow::MainWindow(QWidget *parent, encryptType option, unsigned char flag) 
     playtable->close();
     playfair = new PlayFair;
     hill = new HillEnc;
+    rsa = new RSA(3, 11);
 }
 
 MainWindow::~MainWindow()
@@ -189,6 +193,29 @@ void MainWindow::showHillMatrix(void)
     playtable->show();
 }
 
+void MainWindow::showRSAMatrix(void)
+{
+    if(textKey->isModified()){
+        delete rsa;
+
+        string textkey = QStoStr(textKey->text());
+        vector<long> vec;
+        analyzeStr2Num(textkey, vec);
+
+        if(vec.size() > 1){
+            rsa = new RSA(vec[0], vec[1]);
+        }else if(vec.size() == 1){
+            rsa = new RSA(vec[0]);
+        }else{
+            rsa = new RSA(3, 11);
+        }
+    }
+
+    /* 添加实例填充表格并显示 */
+    playtable->AddItem(*rsa);
+    playtable->show();
+}
+
 void MainWindow::showMatrix(void)
 {
     switch (options) {
@@ -198,8 +225,10 @@ void MainWindow::showMatrix(void)
     case HILL:
         showHillMatrix();
         break;
+    case R_S_A:
+        showRSAMatrix();
+        break;
     default:
-        qDebug() << "don't choose any algorithm";
         QMessageBox::warning(this, tr("Warning"), tr("You did not choose any algorithm."));
         break;
     }
@@ -221,6 +250,9 @@ void MainWindow::showEncrypt(void)
         break;
     case HILL:
         encryptHill();
+        break;
+    case R_S_A:
+        encryptRSA();
         break;
     default:
         qDebug() << "don't choose any algorithm";
@@ -244,6 +276,9 @@ void MainWindow::showDeEncrypt(void)
     case HILL:
         deEncryptHill();
         break;
+    case R_S_A:
+        deEncryptRSA();
+        break;
     default:
         qDebug() << "don't choose any algorithm";
         QMessageBox::warning(this, tr("Warning"), tr("You did not choose any algorithm."));
@@ -252,6 +287,77 @@ void MainWindow::showDeEncrypt(void)
 
     if(isWriteToFile())
         saveFile(textClear);
+}
+
+void MainWindow::encryptRSA(void)
+{
+    string encryptText = QStoStr(textClear->toPlainText());
+    if(encryptText.empty()){
+        QMessageBox::warning(this, tr("Warning"), tr("You didn't input the clear text."));
+        return ;
+    }
+
+    if(textKey->isModified()){
+        delete rsa;
+
+        string textkey = QStoStr(textKey->text());
+        vector<long> vec;
+        analyzeStr2Num(textkey, vec);
+
+        if(vec.size() > 1){
+            rsa = new RSA(vec[0], vec[1]);
+        }else if(vec.size() == 1){
+            rsa = new RSA(vec[0]);
+        }else{
+            rsa = new RSA(3, 11);
+        }
+
+        /* 添加实例填充表格并显示 */
+        playtable->AddItem(*playfair);
+    }
+
+    /* 加密及显示 */
+    long num;
+    str2num(encryptText, num);
+    rsa->encrypt(num);
+    num2str(num, encryptText);
+    textCipher->setText(StrtoQSt(encryptText));
+}
+
+void MainWindow::deEncryptRSA()
+{
+    string DeEncryptText = QStoStr(textCipher->toPlainText());
+    if(DeEncryptText.empty()){
+        QMessageBox::warning(this, tr("Warning"), tr("You didn't input the cipher text."));
+        return ;
+    }
+
+    if(textKey->isModified()){
+        delete rsa;
+
+        string textkey = QStoStr(textKey->text());
+        vector<long> vec;
+        analyzeStr2Num(textkey, vec);
+
+        if(vec.size() > 1){
+            rsa = new RSA(vec[0], vec[1]);
+        }else if(vec.size() == 1){
+            rsa = new RSA(vec[0]);
+        }else{
+            rsa = new RSA(3, 11);
+        }
+
+        /* 添加实例填充表格并显示 */
+        playtable->AddItem(*rsa);
+    }
+
+    /* 解密及显示 */
+    long num;
+    str2num(DeEncryptText, num);
+    rsa->deEncrypt(num);
+    num2str(num, DeEncryptText);
+    textClear->setText(StrtoQSt(DeEncryptText));
+
 }
 
 void MainWindow::encryptPlayfair(void)
@@ -263,10 +369,7 @@ void MainWindow::encryptPlayfair(void)
     }
 
     if(textKey->isModified()){
-        if(!playfair){
-            delete playfair;
-            playfair = nullptr;
-        }
+        delete playfair;
 
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);
@@ -291,10 +394,7 @@ void MainWindow::deEncryptPlayfair(void)
     }
 
     if(textKey->isModified()){
-        if(!playfair){
-            delete playfair;
-            playfair = nullptr;
-        }
+        delete playfair;
 
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);
@@ -321,10 +421,7 @@ void MainWindow::encryptHill(void)
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);
 
-        if(!hill){
-            delete hill;
-            hill = nullptr;
-        }
+        delete hill;
 
         if(textkey.empty())
             hill = new HillEnc;
@@ -351,10 +448,7 @@ void MainWindow::deEncryptHill(void)
     }
 
     if(textKey->isModified()){
-        if(!hill){
-            delete hill;
-            hill = nullptr;
-        }
+        delete hill;
 
         string textkey = QStoStr(textKey->text());
         letterFilter(textkey);//过滤密钥非字母
@@ -382,11 +476,17 @@ void MainWindow::choosePlayfair(){
     playtable->close();
 }
 
-inline
 void MainWindow::chooseHill(){
     options = HILL;
     textKey->setText(tr("rrfvsvcct"));
     textKey->setDisabled(true);
+    playtable->close();
+}
+
+void MainWindow::chooseRSA(){
+    options = R_S_A;
+    textKey->setText(tr(""));
+    textKey->setDisabled(false);
     playtable->close();
 }
 

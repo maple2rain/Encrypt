@@ -5,8 +5,7 @@
 #include <QTableWidget>
 #include "playfair.h"
 #include "hill.h"
-
-class PlayFair;
+#include "rsa.h"
 
 class PlayTable : public QTableWidget{
 public:
@@ -17,6 +16,7 @@ public:
     void AddItem(char *array);
     void AddItem(PlayFair &playfair);
     void AddItem(HillEnc &hill);
+    void AddItem(RSA &rsa);
 };
 
 #endif // TABLE_H

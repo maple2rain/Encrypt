@@ -1,4 +1,5 @@
-﻿#include "strdeal.h"
+﻿#include "../include/strdeal.h"
+#include <sstream>
 
 void str2lowstr(string &str)
 {
@@ -46,4 +47,54 @@ QString StrtoQSt(const string &s)//将string转换为QString
 bool isLowLetter(char ch)//判断是否为小写字母
 {
     return ch >= 'a' && ch <= 'z';
+}
+
+void analyzeStr2Num(const string &str, vector<long> &vec)
+{
+    vector<string> strvec;
+    spiltstr(str, ",", strvec);
+
+    if(!strvec.empty()){
+        for(int i = 0; i < strvec.size(); ++i){
+            istringstream stream;
+            stream.str(strvec[i]);
+            long num;
+            stream >> num;
+            vec.push_back(num);
+        }
+    }
+}
+
+void spiltstr(const string &str, const string pattern, vector<string> &vec)
+{
+    int i;
+    for(i = 0; i < str.size(); ++i){
+        string::size_type pos;
+        pos = str.find(pattern, i); //find the pos of pattern
+
+        if(pos < str.size()){
+            string s = str.substr(i, pos - i);  //copy the substr
+            vec.push_back(s);   //add substr
+            i = pos + pattern.size() - 1;
+        }else{
+            break;
+        }
+    }
+
+    string s = str.substr(i, str.size() - i);
+    vec.push_back(s);
+}
+
+void str2num(const string str, long &num)
+{
+    istringstream is;
+    is.str(str);
+    is >> num;
+}
+
+void num2str(const long num, string &str)
+{
+    ostringstream os;
+    os << num;
+    str = os.str();
 }

@@ -1,5 +1,5 @@
-﻿#include "playfair.h"
-#include "strdeal.h"
+﻿#include "../include/playfair.h"
+#include "../include/strdeal.h"
 #include <map>
 
 PlayFair::PlayFair(string key)

@@ -1,7 +1,7 @@
-﻿#include "hill.h"
-#include "strdeal.h"
-#include "matrix.h"
-#include "strdeal.h"
+﻿#include "../include/hill.h"
+#include "../include/strdeal.h"
+#include "../include/matrix.h"
+#include "../include/strdeal.h"
 #include <QDebug>
 
 HillEnc::HillEnc(string key, IsValid isvalid) :

@@ -9,6 +9,7 @@
 #include "table.h"
 #include "playfair.h"
 #include "hill.h"
+#include "rsa.h"
 #include "strdeal.h"
 
 namespace Ui {
@@ -21,7 +22,7 @@ class MainWindow : public QMainWindow
 
 private:
     enum encryptType{//加密算法类型选择枚举
-        NONE, PLAYFAIR, HILL
+        NONE, PLAYFAIR, HILL, R_S_A
     };
 
 /* 使用异或运算来表示设置读写文件标志,
@@ -37,6 +38,7 @@ public:
 
     void choosePlayfair(void);//选择playfair算法
     void chooseHill(void);//选择Hill算法
+    void chooseRSA(void);//choose RSA
     void checkReadFile(void);//检测按钮判断是否从文件中读取
     void checkWriteFile(void);//检测按钮判断是否将数据写入文件
     void openFile(QTextEdit *text);//打开文件
@@ -48,11 +50,14 @@ public:
     void deEncryptPlayfair(void);//playfair解密算法
     void encryptHill(void);//Hill加密算法
     void deEncryptHill(void);//Hill解密算法
+    void encryptRSA(void);//RSA encrypt
+    void deEncryptRSA(void);//RSA dencrypt
     void showEncrypt(void);//显示加密结果
     void showDeEncrypt(void);//显示解密结果
     void showMatrix(void);//显示矩阵
     void showPlayfairMatrix(void);//显示playfair矩阵
     void showHillMatrix(void);//显示Hill矩阵
+    void showRSAMatrix(void);//show info about rsa
     void closeMatrix(void);//关闭矩阵
 
 private:
@@ -62,11 +67,13 @@ private:
     Ui::MainWindow  *ui;
     QRadioButton    *Playfair;//选择playfair算法的单项按钮
     QRadioButton    *Hill;//选择hill算法的单项按钮
+    QRadioButton    *Rsa;
     QTextEdit       *textClear;
     QTextEdit       *textCipher;
     QLineEdit       *textKey;
     PlayFair        *playfair;
     HillEnc         *hill;
+    RSA             *rsa;
     PlayTable       *playtable;
 };
 

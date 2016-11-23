@@ -18,7 +18,8 @@ SOURCES +=  \
     ../src/mainwindow.cpp \
     ../src/palyfair.cpp \
     ../src/strdeal.cpp \
-    ../src/table.cpp
+    ../src/table.cpp \
+    ../src/rsa.cpp
 
 HEADERS  +=  \
     ../include/encrypt.h \
@@ -27,7 +28,8 @@ HEADERS  +=  \
     ../include/matrix.h \
     ../include/playfair.h \
     ../include/strdeal.h \
-    ../include/table.h
+    ../include/table.h \
+    ../include/rsa.h
 
 FORMS    += mainwindow.ui
 

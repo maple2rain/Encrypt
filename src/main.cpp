@@ -1,7 +1,9 @@
-﻿#include "mainwindow.h"
+﻿#include "../include/mainwindow.h"
 #include <QApplication>
 #include <QTableWidget>
-#include "playfair.h"
+#include "../include/playfair.h"
+#include "../include/rsa.h"
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {

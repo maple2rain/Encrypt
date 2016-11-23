@@ -1,5 +1,5 @@
 ﻿#include <sstream>
-#include "table.h"
+#include "../include/table.h"
 
 PlayTable::PlayTable(QWidget *parent) :
     QTableWidget(parent){
@@ -59,4 +59,78 @@ void PlayTable::AddItem(HillEnc &hill)
             this->setItem(i, j, item);
         }
     }
+}
+
+void PlayTable::AddItem(RSA &rsa)
+{
+    this->setRowCount(2);
+    this->setColumnCount(6);
+    this->clear();
+
+    for(int j = 0; j < 6; ++j)
+        this->setColumnWidth(j, 30);
+
+    this->setColumnWidth(3, 40);
+
+    QString txt;
+
+    txt = "p";
+    QTableWidgetItem *item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(0, 0, item);
+
+    txt = "q";
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(0, 1, item);
+
+    txt = "n";
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(0, 2, item);
+
+    txt = "euler";
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(0, 3, item);
+
+    txt = "e";
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(0, 4, item);
+
+    txt = "d";
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(0, 5, item);
+
+    txt = QString("%1").arg(rsa.getPrimeP());
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(1, 0, item);
+
+    txt = QString("%1").arg(rsa.getPrimeQ());
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(1, 1, item);
+
+    txt = QString("%1").arg(rsa.getN());
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(1, 2, item);
+
+    txt = QString("%1").arg(rsa.getEuler());
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(1, 3, item);
+
+    txt = QString("%1").arg(rsa.getPublicKey());
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(1, 4, item);
+
+    txt = QString("%1").arg(rsa.getPrivateKey());
+    item = new QTableWidgetItem;
+    item->setText(txt);
+    this->setItem(1, 5, item);
 }
