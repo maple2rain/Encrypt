@@ -186,6 +186,7 @@ void MainWindow::showHillMatrix(void)
             QMessageBox::warning(this, tr("Warning"), tr("You did not input an valid key."));
             return ;
         }
+        textKey->setModified(false);
     }
 
     /* 添加实例填充表格并显示 */
@@ -209,6 +210,7 @@ void MainWindow::showRSAMatrix(void)
         }else{
             rsa = new RSA(3, 11);
         }
+        textKey->setModified(false);
     }
 
     /* 添加实例填充表格并显示 */
@@ -311,9 +313,10 @@ void MainWindow::encryptRSA(void)
         }else{
             rsa = new RSA(3, 11);
         }
+        textKey->setModified(false);
 
         /* 添加实例填充表格并显示 */
-        playtable->AddItem(*playfair);
+        playtable->AddItem(*rsa);
     }
 
     /* 加密及显示 */
@@ -347,6 +350,7 @@ void MainWindow::deEncryptRSA()
             rsa = new RSA(3, 11);
         }
 
+        textKey->setModified(false);
         /* 添加实例填充表格并显示 */
         playtable->AddItem(*rsa);
     }
@@ -377,6 +381,7 @@ void MainWindow::encryptPlayfair(void)
 
         /* 添加实例填充表格并显示 */
         playtable->AddItem(*playfair);
+        textKey->setModified(false);
     }
 
     /* 加密及显示 */
@@ -402,6 +407,7 @@ void MainWindow::deEncryptPlayfair(void)
 
         /* 添加实例填充表格并显示 */
         playtable->AddItem(*playfair);
+        textKey->setModified(false);
     }
 
     /* 解密及显示 */
@@ -432,6 +438,7 @@ void MainWindow::encryptHill(void)
             QMessageBox::warning(this, tr("Warning"), tr("You did not input an valid key."));
             return ;
         }
+        textKey->setModified(false);
     }
 
     /* 加密及显示 */
@@ -462,6 +469,7 @@ void MainWindow::deEncryptHill(void)
             QMessageBox::warning(this, tr("Warning"), tr("You did not input an valid key."));
             return ;
         }
+        textKey->setModified(false);
     }
 
     /* 解密及显示 */

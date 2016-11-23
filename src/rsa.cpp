@@ -8,8 +8,6 @@
 long RSA::selectPrimeNum(const long random)
 {
     std::vector<char> arr(random, 0);
-
-    qDebug() << arr.size();
     long sq = sqrt(random) + 1;
 
     for (long i = 2; i < sq; ++i){
@@ -23,7 +21,7 @@ long RSA::selectPrimeNum(const long random)
     }
 
     srand((unsigned)time(NULL));
-#define MAX 10
+#define MAX 100
     int i = rand () % MAX;  //select a rand number to choose a prime number
     long ret = 2;
     for(int j = 0; j < i; ++j){
@@ -55,10 +53,10 @@ long RSA::gcdEX(long a, long b, long &x, long &y)
         y = 0;
         return a;
     }else{
-        long ret = gcdEX(b, a % b, x, y);
+        long ret = gcdEX(b, a % b, x, y);   //recursive compute the value
         long tmp = x;
-        x = y;
-        y = tmp - a / b * y;
+        x = y;  //exchange
+        y = tmp - a / b * y; //exchange
         return ret;
     }
 }
@@ -69,7 +67,7 @@ long long easyPow(long base, int power)
     long long product = 1;
 
     while(power){
-        if(power % 2)
+        if(power & 0x01)
             product *= tmp;
 
         tmp *= tmp;
@@ -78,14 +76,32 @@ long long easyPow(long base, int power)
     return product;
 }
 
+//mode extend
+long modeEx(long a, long n, long m)
+{
+    long ret = 1;
+
+    while(n){
+        if(n & 0x01){
+            ret = ret * a % m;
+        }
+
+        a = a * a % m;
+        n /= 2;
+    }
+    return ret;
+}
+
 void RSA::encrypt(long &clear)
 {
-    clear = easyPow(clear, publicKey) % n;
+    //clear = easyPow(clear, publicKey) % n;
+    clear = modeEx(clear, publicKey, n);
 }
 
 void RSA::deEncrypt(long &cipher)
 {
-    cipher = easyPow(cipher, privateKey) % n;
+    //cipher = easyPow(cipher, privateKey) % n;
+    cipher = modeEx(cipher, privateKey, n);
 }
 
 void RSA::construct(void)
@@ -95,9 +111,9 @@ void RSA::construct(void)
 
     do{
         publicKey = selectPrimeNum(euler);  //select a prime number as public key
-    }while(publicKey % euler == 0);
+    }while(euler % publicKey == 0);
 
-    publicKey = 3;//because we can't use big integer, so make publicKey as small as possible
+    //publicKey = 17;//because we can't use big integer, so make publicKey as small as possible
 
     long y;
     gcdEX(publicKey, euler, privateKey, y); //get private key

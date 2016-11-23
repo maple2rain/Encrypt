@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<!-- saved from url=(0079)http://blog.leanote.com/post/maple2snow/RSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta name="HandheldFriendly" content="true">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no, email=no">
+<meta name="description" content="~">
+<meta name="keywords" content="~">
+
+<title>
+
+	RSA加密算法-maple2snow 's Blog
+
+</title>
+
+
+<link href="./RSA加密算法-maple2snow &#39;s Blog_files/font-awesome.css" rel="stylesheet">
+<link href="./RSA加密算法-maple2snow &#39;s Blog_files/style.css" rel="stylesheet">
+<script>
+function log(o) {
+}
+</script>
+<style>
+
+</style>
+
+
+<script type="text/javascript" src="./RSA加密算法-maple2snow &#39;s Blog_files/MathJax.js.下载"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><style type="text/css">.MathJax_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax .merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MathJax .MJX-monospace {font-family: monospace}
+.MathJax .MJX-sans-serif {font-family: sans-serif}
+#MathJax_Tooltip {background-color: InfoBackground; color: InfoText; border: 1px solid black; box-shadow: 2px 2px 5px #AAAAAA; -webkit-box-shadow: 2px 2px 5px #AAAAAA; -moz-box-shadow: 2px 2px 5px #AAAAAA; -khtml-box-shadow: 2px 2px 5px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true'); padding: 3px 4px; z-index: 401; position: absolute; left: 0; top: 0; width: auto; height: auto; display: none}
+.MathJax {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax:focus, body :focus .MathJax {display: inline-table}
+.MathJax img, .MathJax nobr, .MathJax a {border: 0; padding: 0; margin: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+img.MathJax_strut {border: 0!important; padding: 0!important; margin: 0!important; vertical-align: 0!important}
+.MathJax span {display: inline; position: static; border: 0; padding: 0; margin: 0; vertical-align: 0; line-height: normal; text-decoration: none}
+.MathJax nobr {white-space: nowrap!important}
+.MathJax img {display: inline!important; float: none!important}
+.MathJax * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.MathJax_Processing {visibility: hidden; position: fixed; width: 0; height: 0; overflow: hidden}
+.MathJax_Processed {display: none!important}
+.MathJax_ExBox {display: block!important; overflow: hidden; width: 1px; height: 60ex; min-height: 0; max-height: none}
+.MathJax .MathJax_EmBox {display: block!important; overflow: hidden; width: 1px; height: 60em; min-height: 0; max-height: none}
+.MathJax .MathJax_HitBox {cursor: text; background: white; opacity: 0; filter: alpha(opacity=0)}
+.MathJax .MathJax_HitBox * {filter: none; opacity: 1; background: transparent}
+#MathJax_Tooltip * {filter: none; opacity: 1; background: transparent}
+@font-face {font-family: MathJax_Main; src: url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Regular.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Main-bold; src: url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Bold.woff?rev=2.6.1') format('woff'), url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Bold.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Main-italic; src: url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/woff/MathJax_Main-Italic.woff?rev=2.6.1') format('woff'), url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/otf/MathJax_Main-Italic.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Math-italic; src: url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/woff/MathJax_Math-Italic.woff?rev=2.6.1') format('woff'), url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/otf/MathJax_Math-Italic.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Caligraphic; src: url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/woff/MathJax_Caligraphic-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/otf/MathJax_Caligraphic-Regular.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Size1; src: url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/woff/MathJax_Size1-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/otf/MathJax_Size1-Regular.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Size2; src: url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/woff/MathJax_Size2-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/otf/MathJax_Size2-Regular.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Size3; src: url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/woff/MathJax_Size3-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/otf/MathJax_Size3-Regular.otf?rev=2.6.1') format('opentype')}
+@font-face {font-family: MathJax_Size4; src: url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/woff/MathJax_Size4-Regular.woff?rev=2.6.1') format('woff'), url('https://cdn.bootcss.com/mathjax/2.6.1/fonts/HTML-CSS/TeX/otf/MathJax_Size4-Regular.otf?rev=2.6.1') format('opentype')}
+.MathJax .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+
+<body style="zoom: 1;"><div style="visibility: hidden; overflow: hidden; position: absolute; top: 0px; height: 1px; width: auto; padding: 0px; border: 0px; margin: 0px; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal;"><div id="MathJax_Hidden"></div></div><div id="MathJax_Message" style="display: none;"></div>
+<div class="page">
+<header class="my-header">
+<hgroup>
+
+
+	<h1>RSA加密算法</h1>
+	<p class="sm-info">文章来自&nbsp;&nbsp;maple2snow 's Blog&nbsp;//&nbsp;每个不曾舞动指尖的夜晚，都是对生命的辜负！</p>
+
+</hgroup>
+
+<nav class="my-nav">
+<div class="my-menu">
+<ul>
+
+<li class="">
+	<a href="http://blog.leanote.com/maple2snow">主页</a>
+</li>
+
+
+<li> | </li>
+
+
+<li class="">
+	<a href="http://blog.leanote.com/single/maple2snow/About-Me">About Me</a>
+</li>
+
+<li> | </li>
+<li class="">
+	<a href="http://blog.leanote.com/archives/maple2snow">归档</a>
+</li>
+<li class="">
+	<a href="http://blog.leanote.com/tags/maple2snow">标签</a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+
+
+
+
+<div class="my-wrap">
+
+<div class="my-main">
+<div class="topmark" id="topmark1"></div>
+
+<div id="postsContainer">
+    <div id="posts">
+        <div class="each-post">
+            <div class="desc markdown-content" id="content"><h1 id="title">加密算法之RSA</h1>
+
+<h2 id="title-1">1 RSA算法简介</h2>
+
+<p>RSA公钥加密算法是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。1987年首次公布，当时他们三人都在麻省理工学院工作。RSA就是他们三人姓氏开头字母拼在一起组成的。</p>
+
+<p>RSA算法是一种非对称密码算法，所谓非对称，就是指该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密。</p>
+
+<p>RSA算法基于一个十分简单的数论事实：将两个大质数相乘十分容易，但是想要对其乘积进行因式分解却极其困难，因此可以将<code>乘积</code>公开作为加密密钥。</p>
+
+<h2 id="title-2">2 公钥密钥密码体制基本含义</h2>
+
+<p>在公开密钥密码体制中，加密密钥（即公开密钥）<code>public  key</code>是公开信息，而解密密钥（即秘密密钥）<code>private key</code>是需要保密的。加密算法<code>E</code>和解密算法<code>D</code>也都是公开的。 <br>
+虽然解密密钥<code>private key</code>是由公开密钥<code>public  key</code>决定的，但却不能根据<code>public  key</code>计算出<code>private key</code>。</p>
+
+<h2 id="title-3">3 密钥生成步骤</h2>
+
+<p>假设Alice要给Bob进行加密通信，那么她该如何生成公钥和私钥呢？</p>
+
+<ol>
+<li>随机选择两个不相等的质数p和q，比如61和53</li>
+<li>计算p和q的乘积，即 <br>
+<span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-1-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;61&lt;/mn&gt;&lt;mo&gt;&amp;#x2217;&lt;/mo&gt;&lt;mn&gt;53&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;3233&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-1" role="math" style="width: 10.289em; display: inline-block;"><span style="display: inline-block; position: relative; width: 8.231em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.546em 1008.17em 2.574em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-2"><span class="mi" id="MathJax-Span-3" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-4" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mn" id="MathJax-Span-5" style="font-family: MathJax_Main; padding-left: 0.289em;">61</span><span class="mo" id="MathJax-Span-6" style="font-family: MathJax_Main; padding-left: 0.231em;">∗</span><span class="mn" id="MathJax-Span-7" style="font-family: MathJax_Main; padding-left: 0.231em;">53</span><span class="mo" id="MathJax-Span-8" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mn" id="MathJax-Span-9" style="font-family: MathJax_Main; padding-left: 0.289em;">3233</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.068em; border-left: 0px solid; width: 0px; height: 1.004em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>n</mi><mo>=</mo><mn>61</mn><mo>∗</mo><mn>53</mn><mo>=</mo><mn>3233</mn></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-1"> n = 61 * 53 = 3233 </script> <br>
+<code>n</code>的二进制长度就是密钥长度，<code>3233</code>的二进制形式为<code>110010100001</code>，一共有12位。实际应用中，<code>RSA</code>密钥一般是<code>1024</code>位，为提高保密级别则使用更长的密钥。</li>
+<li>计算n的欧拉函数φ(n) <br>
+根据p和q为质数，得欧拉函数为 <br>
+<span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-2-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x3C6;&lt;/mo&gt;&lt;/mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;&amp;#x2217;&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-10" role="math" style="width: 12.86em; display: inline-block;"><span style="display: inline-block; position: relative; width: 10.289em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1010.17em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-11"><span class="texatom" id="MathJax-Span-12"><span class="mrow" id="MathJax-Span-13"><span class="mo" id="MathJax-Span-14" style="font-family: MathJax_Math-italic;">φ</span></span></span><span class="mo" id="MathJax-Span-15" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-16" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-17" style="font-family: MathJax_Main;">)</span><span class="mo" id="MathJax-Span-18" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mo" id="MathJax-Span-19" style="font-family: MathJax_Main; padding-left: 0.289em;">(</span><span class="mi" id="MathJax-Span-20" style="font-family: MathJax_Math-italic;">p</span><span class="mo" id="MathJax-Span-21" style="font-family: MathJax_Main; padding-left: 0.231em;">−</span><span class="mn" id="MathJax-Span-22" style="font-family: MathJax_Main; padding-left: 0.231em;">1</span><span class="mo" id="MathJax-Span-23" style="font-family: MathJax_Main;">)</span><span class="mo" id="MathJax-Span-24" style="font-family: MathJax_Main; padding-left: 0.231em;">∗</span><span class="mo" id="MathJax-Span-25" style="font-family: MathJax_Main; padding-left: 0.231em;">(</span><span class="mi" id="MathJax-Span-26" style="font-family: MathJax_Math-italic;">q<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-27" style="font-family: MathJax_Main; padding-left: 0.231em;">−</span><span class="mn" id="MathJax-Span-28" style="font-family: MathJax_Main; padding-left: 0.231em;">1</span><span class="mo" id="MathJax-Span-29" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow class="MJX-TeXAtom-ORD"><mo>φ</mo></mrow><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>∗</mo><mo stretchy="false">(</mo><mi>q</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-2"> φ(n) = (p - 1) * (q - 1) </script> <br>
+从而得出的<code>φ(n)</code>为<code>3120</code>。</li>
+<li>随机选择一个整数e，条件是<span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-3-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;&amp;lt;&lt;/mo&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mo&gt;&amp;lt;&lt;/mo&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x3C6;&lt;/mo&gt;&lt;/mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-30" role="math" style="width: 7.146em; display: inline-block;"><span style="display: inline-block; position: relative; width: 5.717em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1005.6em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-31"><span class="mn" id="MathJax-Span-32" style="font-family: MathJax_Main;">1</span><span class="mo" id="MathJax-Span-33" style="font-family: MathJax_Main; padding-left: 0.289em;">&lt;</span><span class="mi" id="MathJax-Span-34" style="font-family: MathJax_Math-italic; padding-left: 0.289em;">e</span><span class="mo" id="MathJax-Span-35" style="font-family: MathJax_Main; padding-left: 0.289em;">&lt;</span><span class="texatom" id="MathJax-Span-36" style="padding-left: 0.289em;"><span class="mrow" id="MathJax-Span-37"><span class="mo" id="MathJax-Span-38" style="font-family: MathJax_Math-italic;">φ</span></span></span><span class="mo" id="MathJax-Span-39" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-40" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-41" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>1</mn><mo>&lt;</mo><mi>e</mi><mo>&lt;</mo><mrow class="MJX-TeXAtom-ORD"><mo>φ</mo></mrow><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-3">1 < e < φ(n)</script>，且e与φ(n)互质 <br>
+从而在1~3120中，随机选择一个数，为了方便，可以选择一个质数，并且保证e和φ(n)互质，故在此可以选择<code>17</code></li>
+<li>计算e对于φ(n)的模范元素d <br>
+所谓<code>模反元素</code>就是指有一个整数d，可以使得ed被φ(n)除的余数为1。 <br>
+<span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-4-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mo&gt;&amp;#x2261;&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x3C6;&lt;/mo&gt;&lt;/mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-42" role="math" style="width: 9.431em; display: inline-block;"><span style="display: inline-block; position: relative; width: 7.546em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1007.43em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-43"><span class="mi" id="MathJax-Span-44" style="font-family: MathJax_Math-italic;">e</span><span class="mi" id="MathJax-Span-45" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-46" style="font-family: MathJax_Main; padding-left: 0.289em;">≡</span><span class="mn" id="MathJax-Span-47" style="font-family: MathJax_Main; padding-left: 0.289em;">1</span><span class="mo" id="MathJax-Span-48" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-49" style="font-family: MathJax_Math-italic;">m</span><span class="mi" id="MathJax-Span-50" style="font-family: MathJax_Math-italic;">o</span><span class="mi" id="MathJax-Span-51" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="texatom" id="MathJax-Span-52"><span class="mrow" id="MathJax-Span-53"><span class="mo" id="MathJax-Span-54" style="font-family: MathJax_Math-italic;">φ</span></span></span><span class="mo" id="MathJax-Span-55" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-56" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-57" style="font-family: MathJax_Main;">)</span><span class="mo" id="MathJax-Span-58" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>e</mi><mi>d</mi><mo>≡</mo><mn>1</mn><mo stretchy="false">(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mrow class="MJX-TeXAtom-ORD"><mo>φ</mo></mrow><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-4"> ed ≡ 1 (mod φ(n)) </script> <br>
+这个式子等价于 <br>
+<span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-5-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x3C6;&lt;/mo&gt;&lt;/mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-59" role="math" style="width: 8.231em; display: inline-block;"><span style="display: inline-block; position: relative; width: 6.574em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1006.46em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-60"><span class="mi" id="MathJax-Span-61" style="font-family: MathJax_Math-italic;">e</span><span class="mi" id="MathJax-Span-62" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-63" style="font-family: MathJax_Main; padding-left: 0.231em;">−</span><span class="mn" id="MathJax-Span-64" style="font-family: MathJax_Main; padding-left: 0.231em;">1</span><span class="mo" id="MathJax-Span-65" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mi" id="MathJax-Span-66" style="font-family: MathJax_Math-italic; padding-left: 0.289em;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="texatom" id="MathJax-Span-67"><span class="mrow" id="MathJax-Span-68"><span class="mo" id="MathJax-Span-69" style="font-family: MathJax_Math-italic;">φ</span></span></span><span class="mo" id="MathJax-Span-70" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-71" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-72" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>e</mi><mi>d</mi><mo>−</mo><mn>1</mn><mo>=</mo><mi>y</mi><mrow class="MJX-TeXAtom-ORD"><mo>φ</mo></mrow><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-5"> ed - 1 = yφ(n) </script> <br>
+于是，找到模反元素d，实质上就是对下面这个二元一次方程求解。 <br>
+<span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-6-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo&gt;&amp;#x3C6;&lt;/mo&gt;&lt;/mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-73" role="math" style="width: 8.289em; display: inline-block;"><span style="display: inline-block; position: relative; width: 6.631em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1006.57em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-74"><span class="mi" id="MathJax-Span-75" style="font-family: MathJax_Math-italic;">e</span><span class="mi" id="MathJax-Span-76" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-77" style="font-family: MathJax_Main; padding-left: 0.231em;">+</span><span class="texatom" id="MathJax-Span-78" style="padding-left: 0.231em;"><span class="mrow" id="MathJax-Span-79"><span class="mo" id="MathJax-Span-80" style="font-family: MathJax_Math-italic;">φ</span></span></span><span class="mo" id="MathJax-Span-81" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-82" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-83" style="font-family: MathJax_Main;">)</span><span class="mi" id="MathJax-Span-84" style="font-family: MathJax_Math-italic;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-85" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mn" id="MathJax-Span-86" style="font-family: MathJax_Main; padding-left: 0.289em;">1</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>e</mi><mi>x</mi><mo>+</mo><mrow class="MJX-TeXAtom-ORD"><mo>φ</mo></mrow><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mi>y</mi><mo>=</mo><mn>1</mn></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-6"> ex + φ(n)y = 1 </script></li>
+</ol>
+
+<p>现<code>e = 17</code>，<code>φ(n)=3120</code>，即求 <br>
+<span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-7-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mn&gt;17&lt;/mn&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;3120&lt;/mn&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-87" role="math" style="width: 8.974em; display: inline-block;"><span style="display: inline-block; position: relative; width: 7.146em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.546em 1007.09em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-88"><span class="mn" id="MathJax-Span-89" style="font-family: MathJax_Main;">17</span><span class="mi" id="MathJax-Span-90" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-91" style="font-family: MathJax_Main; padding-left: 0.231em;">+</span><span class="mn" id="MathJax-Span-92" style="font-family: MathJax_Main; padding-left: 0.231em;">3120</span><span class="mi" id="MathJax-Span-93" style="font-family: MathJax_Math-italic;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-94" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mn" id="MathJax-Span-95" style="font-family: MathJax_Main; padding-left: 0.289em;">1</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.218em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mn>17</mn><mi>x</mi><mo>+</mo><mn>3120</mn><mi>y</mi><mo>=</mo><mn>1</mn></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-7"> 17x + 3120y = 1 </script> <br>
+解上述方程可使用<a href="https://zh.wikipedia.org/wiki/%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95">扩展欧几里得算法</a>求解。现在可算出一组整数解为<span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-8-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mn&gt;2753&lt;/mn&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mn&gt;15&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-96" role="math" style="width: 10.803em; display: inline-block;"><span style="display: inline-block; position: relative; width: 8.631em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1008.52em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-97"><span class="mo" id="MathJax-Span-98" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-99" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-100" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-101" style="font-family: MathJax_Math-italic; padding-left: 0.174em;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-102" style="font-family: MathJax_Main;">)</span><span class="mo" id="MathJax-Span-103" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mo" id="MathJax-Span-104" style="font-family: MathJax_Main; padding-left: 0.289em;">(</span><span class="mn" id="MathJax-Span-105" style="font-family: MathJax_Main;">2753</span><span class="mo" id="MathJax-Span-106" style="font-family: MathJax_Main;">,</span><span class="mo" id="MathJax-Span-107" style="font-family: MathJax_Main; padding-left: 0.174em;">−</span><span class="mn" id="MathJax-Span-108" style="font-family: MathJax_Main;">15</span><span class="mo" id="MathJax-Span-109" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mn>2753</mn><mo>,</mo><mo>−</mo><mn>15</mn><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-8">(x, y) = (2753, -15)</script>，即<code>d = 2753</code>。 <br>
+6. 将n和e封装成公钥，将n和d封装成私钥 <br>
+所以，Alice选择的公钥为<code>(3233, 17)</code>，私钥为<code>(3233, 2753)</code>。</p>
+
+<h2 id="title-4">4 加密和解密</h2>
+
+<h3 id="title-5">4.1 使用公钥加密</h3>
+
+<p>假设Alice现在要发送加密信息<code>m</code>，那么她需要用公钥对其进行加密。需要注意的是，<code>m</code>必须是整数(字符串可以取ascii值或unicode值)，且<code>m</code>必须小于<code>n</code>。</p>
+
+<p>加密使用下列公式：</p>
+
+<p><span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-9-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;msup&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;/msup&gt;&lt;mo&gt;&amp;#x2261;&lt;/mo&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-110" role="math" style="width: 7.889em; display: inline-block;"><span style="display: inline-block; position: relative; width: 6.289em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1006.17em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-111"><span class="msubsup" id="MathJax-Span-112"><span style="display: inline-block; position: relative; width: 1.26em; height: 0px;"><span style="position: absolute; clip: rect(3.374em 1000.86em 4.174em -999.997em); top: -3.997em; left: 0.003em;"><span class="mi" id="MathJax-Span-113" style="font-family: MathJax_Math-italic;">m</span><span style="display: inline-block; width: 0px; height: 4.003em;"></span></span><span style="position: absolute; top: -4.397em; left: 0.86em;"><span class="mi" id="MathJax-Span-114" style="font-size: 70.7%; font-family: MathJax_Math-italic;">e</span><span style="display: inline-block; width: 0px; height: 4.003em;"></span></span></span></span><span class="mo" id="MathJax-Span-115" style="font-family: MathJax_Main; padding-left: 0.289em;">≡</span><span class="mi" id="MathJax-Span-116" style="font-family: MathJax_Math-italic; padding-left: 0.289em;">c</span><span class="mo" id="MathJax-Span-117" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-118" style="font-family: MathJax_Math-italic;">m</span><span class="mi" id="MathJax-Span-119" style="font-family: MathJax_Math-italic;">o</span><span class="mi" id="MathJax-Span-120" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mi" id="MathJax-Span-121" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-122" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msup><mi>m</mi><mi>e</mi></msup><mo>≡</mo><mi>c</mi><mo stretchy="false">(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mi>n</mi><mo stretchy="false">)</mo></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-9"> m^e ≡ c (mod n)</script></p>
+
+<p>其中，上述的<code>c</code>为加密密文。</p>
+
+<p>由上述例子，假设Alice发送的明文m为<code>65</code>，那么可得到下列等式： <br>
+<span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-10-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;msup&gt;&lt;mn&gt;65&lt;/mn&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mn&gt;17&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mo&gt;&amp;#x2261;&lt;/mo&gt;&lt;mn&gt;2790&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mn&gt;3233&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-123" role="math" style="width: 12.231em; display: inline-block;"><span style="display: inline-block; position: relative; width: 9.774em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.317em 1009.66em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-124"><span class="msubsup" id="MathJax-Span-125"><span style="display: inline-block; position: relative; width: 1.774em; height: 0px;"><span style="position: absolute; clip: rect(3.146em 1000.97em 4.174em -999.997em); top: -3.997em; left: 0.003em;"><span class="mn" id="MathJax-Span-126" style="font-family: MathJax_Main;">65</span><span style="display: inline-block; width: 0px; height: 4.003em;"></span></span><span style="position: absolute; top: -4.397em; left: 1.031em;"><span class="texatom" id="MathJax-Span-127"><span class="mrow" id="MathJax-Span-128"><span class="mn" id="MathJax-Span-129" style="font-size: 70.7%; font-family: MathJax_Main;">17</span></span></span><span style="display: inline-block; width: 0px; height: 4.003em;"></span></span></span></span><span class="mo" id="MathJax-Span-130" style="font-family: MathJax_Main; padding-left: 0.289em;">≡</span><span class="mn" id="MathJax-Span-131" style="font-family: MathJax_Main; padding-left: 0.289em;">2790</span><span class="mo" id="MathJax-Span-132" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-133" style="font-family: MathJax_Math-italic;">m</span><span class="mi" id="MathJax-Span-134" style="font-family: MathJax_Math-italic;">o</span><span class="mi" id="MathJax-Span-135" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mn" id="MathJax-Span-136" style="font-family: MathJax_Main;">3233</span><span class="mo" id="MathJax-Span-137" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.575em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msup><mn>65</mn><mrow class="MJX-TeXAtom-ORD"><mn>17</mn></mrow></msup><mo>≡</mo><mn>2790</mn><mo stretchy="false">(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mn>3233</mn><mo stretchy="false">)</mo></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-10"> 65^{17} ≡ 2790 (mod 3233)</script> <br>
+从而，密文<code>c</code>为<code>2790</code>。Alice将密文<code>2790</code>发送给了Bob。</p>
+
+<h3 id="title-6">4.2 使用私钥解密</h3>
+
+<p>解密使用下列公式：</p>
+
+<p><span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-11-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;msup&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;/msup&gt;&lt;mo&gt;&amp;#x2261;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-138" role="math" style="width: 7.946em; display: inline-block;"><span style="display: inline-block; position: relative; width: 6.346em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.317em 1006.23em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-139"><span class="msubsup" id="MathJax-Span-140"><span style="display: inline-block; position: relative; width: 0.86em; height: 0px;"><span style="position: absolute; clip: rect(3.374em 1000.46em 4.174em -999.997em); top: -3.997em; left: 0.003em;"><span class="mi" id="MathJax-Span-141" style="font-family: MathJax_Math-italic;">c</span><span style="display: inline-block; width: 0px; height: 4.003em;"></span></span><span style="position: absolute; top: -4.397em; left: 0.46em;"><span class="mi" id="MathJax-Span-142" style="font-size: 70.7%; font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 4.003em;"></span></span></span></span><span class="mo" id="MathJax-Span-143" style="font-family: MathJax_Main; padding-left: 0.289em;">≡</span><span class="mi" id="MathJax-Span-144" style="font-family: MathJax_Math-italic; padding-left: 0.289em;">m</span><span class="mo" id="MathJax-Span-145" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-146" style="font-family: MathJax_Math-italic;">m</span><span class="mi" id="MathJax-Span-147" style="font-family: MathJax_Math-italic;">o</span><span class="mi" id="MathJax-Span-148" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mi" id="MathJax-Span-149" style="font-family: MathJax_Math-italic;">n</span><span class="mo" id="MathJax-Span-150" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.575em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msup><mi>c</mi><mi>d</mi></msup><mo>≡</mo><mi>m</mi><mo stretchy="false">(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mi>n</mi><mo stretchy="false">)</mo></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-11"> c^d ≡ m (mod n) </script></p>
+
+<p>由密文<code>c</code>为<code>2790</code>，得下列等式</p>
+
+<p><span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-12-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;msup&gt;&lt;mn&gt;2790&lt;/mn&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mn&gt;2753&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mo&gt;&amp;#x2261;&lt;/mo&gt;&lt;mn&gt;65&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mn&gt;3233&lt;/mn&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-151" role="math" style="width: 13.146em; display: inline-block;"><span style="display: inline-block; position: relative; width: 10.517em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.317em 1010.4em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-152"><span class="msubsup" id="MathJax-Span-153"><span style="display: inline-block; position: relative; width: 3.489em; height: 0px;"><span style="position: absolute; clip: rect(3.146em 1001.95em 4.174em -999.997em); top: -3.997em; left: 0.003em;"><span class="mn" id="MathJax-Span-154" style="font-family: MathJax_Main;">2790</span><span style="display: inline-block; width: 0px; height: 4.003em;"></span></span><span style="position: absolute; top: -4.397em; left: 2.003em;"><span class="texatom" id="MathJax-Span-155"><span class="mrow" id="MathJax-Span-156"><span class="mn" id="MathJax-Span-157" style="font-size: 70.7%; font-family: MathJax_Main;">2753</span></span></span><span style="display: inline-block; width: 0px; height: 4.003em;"></span></span></span></span><span class="mo" id="MathJax-Span-158" style="font-family: MathJax_Main; padding-left: 0.289em;">≡</span><span class="mn" id="MathJax-Span-159" style="font-family: MathJax_Main; padding-left: 0.289em;">65</span><span class="mo" id="MathJax-Span-160" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-161" style="font-family: MathJax_Math-italic;">m</span><span class="mi" id="MathJax-Span-162" style="font-family: MathJax_Math-italic;">o</span><span class="mi" id="MathJax-Span-163" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mn" id="MathJax-Span-164" style="font-family: MathJax_Main;">3233</span><span class="mo" id="MathJax-Span-165" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.575em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msup><mn>2790</mn><mrow class="MJX-TeXAtom-ORD"><mn>2753</mn></mrow></msup><mo>≡</mo><mn>65</mn><mo stretchy="false">(</mo><mi>m</mi><mi>o</mi><mi>d</mi><mn>3233</mn><mo stretchy="false">)</mo></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-12"> 2790^{2753} ≡ 65 (mod 3233) </script></p>
+
+<p>从而，Bob解密得出Alice要发出的明文为<code>65</code>。 <br>
+至此，<code>加密——解密过程</code>结束。</p>
+
+<h3 id="title-7">4.3 补充</h3>
+
+<p>由于<code>RSA</code>算法智能加密小于n的整数，当向加密更大的整数时，可以有两种解决方法：</p>
+
+<ul>
+<li>把长信息分隔成短信息，分别对每段加密</li>
+<li>选择另一种<code>对称性加密算法</code>，用这种算法的密钥加密信息，再用<code>RSA</code>公钥加密该密钥</li>
+</ul>
+
+<h2 id="title-8">5 核心算法代码</h2>
+
+<h3 id="title-9">5.1 扩展欧几里得算法</h3>
+
+<p><code>扩展欧几里得算法</code>是<code>辗转相除法</code>的扩展。 <br>
+已知整数a、b，扩展欧几里得算法可以在求得a、b的最大公约数的同时，能找到整数x、y（其中一个很可能是负数），使它们满足贝祖等式 <br>
+<span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-13-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-166" role="math" style="width: 10.289em; display: inline-block;"><span style="display: inline-block; position: relative; width: 8.231em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1008.12em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-167"><span class="mi" id="MathJax-Span-168" style="font-family: MathJax_Math-italic;">a</span><span class="mi" id="MathJax-Span-169" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-170" style="font-family: MathJax_Main; padding-left: 0.231em;">+</span><span class="mi" id="MathJax-Span-171" style="font-family: MathJax_Math-italic; padding-left: 0.231em;">b</span><span class="mi" id="MathJax-Span-172" style="font-family: MathJax_Math-italic;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-173" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mi" id="MathJax-Span-174" style="font-family: MathJax_Math-italic; padding-left: 0.289em;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mi" id="MathJax-Span-175" style="font-family: MathJax_Math-italic;">c</span><span class="mi" id="MathJax-Span-176" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-177" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-178" style="font-family: MathJax_Math-italic;">a</span><span class="mo" id="MathJax-Span-179" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-180" style="font-family: MathJax_Math-italic; padding-left: 0.174em;">b</span><span class="mo" id="MathJax-Span-181" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi><mi>y</mi><mo>=</mo><mi>g</mi><mi>c</mi><mi>d</mi><mo stretchy="false">(</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">)</mo></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-13">a x + b y = gcd ( a , b )</script> <br>
+如果a是负数，可以把问题转化成 <br>
+<span class="MathJax_Preview" style="color: inherit;"></span><div class="MathJax_Display" style="text-align: center;"><span class="MathJax" id="MathJax-Element-14-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot; display=&quot;block&quot;&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;|&lt;/mo&gt;&lt;/mrow&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;|&lt;/mo&gt;&lt;/mrow&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mo&gt;&amp;#x2212;&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;|&lt;/mo&gt;&lt;/mrow&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mrow class=&quot;MJX-TeXAtom-ORD&quot;&gt;&lt;mo stretchy=&quot;false&quot;&gt;|&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-182" role="math" style="width: 13.66em; display: inline-block;"><span style="display: inline-block; position: relative; width: 10.917em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1010.8em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-183"><span class="texatom" id="MathJax-Span-184"><span class="mrow" id="MathJax-Span-185"><span class="mo" id="MathJax-Span-186" style="font-family: MathJax_Main;">|</span></span></span><span class="mi" id="MathJax-Span-187" style="font-family: MathJax_Math-italic;">a</span><span class="texatom" id="MathJax-Span-188"><span class="mrow" id="MathJax-Span-189"><span class="mo" id="MathJax-Span-190" style="font-family: MathJax_Main;">|</span></span></span><span class="mo" id="MathJax-Span-191" style="font-family: MathJax_Main;">(</span><span class="mo" id="MathJax-Span-192" style="font-family: MathJax_Main;">−</span><span class="mi" id="MathJax-Span-193" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-194" style="font-family: MathJax_Main;">)</span><span class="mo" id="MathJax-Span-195" style="font-family: MathJax_Main; padding-left: 0.231em;">+</span><span class="mi" id="MathJax-Span-196" style="font-family: MathJax_Math-italic; padding-left: 0.231em;">b</span><span class="mi" id="MathJax-Span-197" style="font-family: MathJax_Math-italic;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-198" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mi" id="MathJax-Span-199" style="font-family: MathJax_Math-italic; padding-left: 0.289em;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mi" id="MathJax-Span-200" style="font-family: MathJax_Math-italic;">c</span><span class="mi" id="MathJax-Span-201" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-202" style="font-family: MathJax_Main;">(</span><span class="texatom" id="MathJax-Span-203"><span class="mrow" id="MathJax-Span-204"><span class="mo" id="MathJax-Span-205" style="font-family: MathJax_Main;">|</span></span></span><span class="mi" id="MathJax-Span-206" style="font-family: MathJax_Math-italic;">a</span><span class="texatom" id="MathJax-Span-207"><span class="mrow" id="MathJax-Span-208"><span class="mo" id="MathJax-Span-209" style="font-family: MathJax_Main;">|</span></span></span><span class="mo" id="MathJax-Span-210" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-211" style="font-family: MathJax_Math-italic; padding-left: 0.174em;">b</span><span class="mo" id="MathJax-Span-212" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow class="MJX-TeXAtom-ORD"><mo stretchy="false">|</mo></mrow><mi>a</mi><mrow class="MJX-TeXAtom-ORD"><mo stretchy="false">|</mo></mrow><mo stretchy="false">(</mo><mo>−</mo><mi>x</mi><mo stretchy="false">)</mo><mo>+</mo><mi>b</mi><mi>y</mi><mo>=</mo><mi>g</mi><mi>c</mi><mi>d</mi><mo stretchy="false">(</mo><mrow class="MJX-TeXAtom-ORD"><mo stretchy="false">|</mo></mrow><mi>a</mi><mrow class="MJX-TeXAtom-ORD"><mo stretchy="false">|</mo></mrow><mo>,</mo><mi>b</mi><mo stretchy="false">)</mo></math></span></span></div><script type="math/tex; mode=display" id="MathJax-Element-14">| a | ( − x ) + b y = gcd ( | a | , b )</script></p>
+
+<p>通常谈到最大公约数时，都会提到一个非常基本的事实：给予二整数a、b，必存在有整数x、y使得<span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-15-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-213" role="math" style="width: 10.289em; display: inline-block;"><span style="display: inline-block; position: relative; width: 8.231em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1008.12em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-214"><span class="mi" id="MathJax-Span-215" style="font-family: MathJax_Math-italic;">a</span><span class="mi" id="MathJax-Span-216" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-217" style="font-family: MathJax_Main; padding-left: 0.231em;">+</span><span class="mi" id="MathJax-Span-218" style="font-family: MathJax_Math-italic; padding-left: 0.231em;">b</span><span class="mi" id="MathJax-Span-219" style="font-family: MathJax_Math-italic;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-220" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mi" id="MathJax-Span-221" style="font-family: MathJax_Math-italic; padding-left: 0.289em;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mi" id="MathJax-Span-222" style="font-family: MathJax_Math-italic;">c</span><span class="mi" id="MathJax-Span-223" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-224" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-225" style="font-family: MathJax_Math-italic;">a</span><span class="mo" id="MathJax-Span-226" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-227" style="font-family: MathJax_Math-italic; padding-left: 0.174em;">b</span><span class="mo" id="MathJax-Span-228" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi><mi>y</mi><mo>=</mo><mi>g</mi><mi>c</mi><mi>d</mi><mo stretchy="false">(</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-15">ax + by = gcd(a,b)</script> <br>
+有两个数a,b，对它们进行辗转相除法，可得它们的最大公约数。然后，收集辗转相除法中产生的式子，倒回去，可以得到<span class="MathJax_Preview" style="color: inherit;"></span><span class="MathJax" id="MathJax-Element-16-Frame" tabindex="0" data-mathml="&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/math&gt;" role="presentation" style="position: relative;"><nobr aria-hidden="true"><span class="math" id="MathJax-Span-229" role="math" style="width: 10.289em; display: inline-block;"><span style="display: inline-block; position: relative; width: 8.231em; height: 0px; font-size: 125%;"><span style="position: absolute; clip: rect(1.489em 1008.12em 2.803em -999.997em); top: -2.397em; left: 0.003em;"><span class="mrow" id="MathJax-Span-230"><span class="mi" id="MathJax-Span-231" style="font-family: MathJax_Math-italic;">a</span><span class="mi" id="MathJax-Span-232" style="font-family: MathJax_Math-italic;">x</span><span class="mo" id="MathJax-Span-233" style="font-family: MathJax_Main; padding-left: 0.231em;">+</span><span class="mi" id="MathJax-Span-234" style="font-family: MathJax_Math-italic; padding-left: 0.231em;">b</span><span class="mi" id="MathJax-Span-235" style="font-family: MathJax_Math-italic;">y<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-236" style="font-family: MathJax_Main; padding-left: 0.289em;">=</span><span class="mi" id="MathJax-Span-237" style="font-family: MathJax_Math-italic; padding-left: 0.289em;">g<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mi" id="MathJax-Span-238" style="font-family: MathJax_Math-italic;">c</span><span class="mi" id="MathJax-Span-239" style="font-family: MathJax_Math-italic;">d<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-240" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-241" style="font-family: MathJax_Math-italic;">a</span><span class="mo" id="MathJax-Span-242" style="font-family: MathJax_Main;">,</span><span class="mi" id="MathJax-Span-243" style="font-family: MathJax_Math-italic; padding-left: 0.174em;">b</span><span class="mo" id="MathJax-Span-244" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.403em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -0.354em; border-left: 0px solid; width: 0px; height: 1.432em;"></span></span></nobr><span class="MJX_Assistive_MathML" role="presentation"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi><mi>y</mi><mo>=</mo><mi>g</mi><mi>c</mi><mi>d</mi><mo stretchy="false">(</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo stretchy="false">)</mo></math></span></span><script type="math/tex" id="MathJax-Element-16">ax+by=gcd(a,b)</script>的整数解。</p>
+
+<ul>
+<li>C++代码实现</li>
+</ul>
+
+<pre class="prettyprint linenums prettyprinted"><ol class="linenums"><li class="L0"><code class="language-c++"><span class="kwd">long</span><span class="pln"> gcdEX</span><span class="pun">(</span><span class="kwd">long</span><span class="pln"> a</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">long</span><span class="pln"> b</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">long</span><span class="pln"> </span><span class="pun">&amp;</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">long</span><span class="pln"> </span><span class="pun">&amp;</span><span class="pln">y</span><span class="pun">)</span></code></li><li class="L1"><code class="language-c++"><span class="pun">{</span></code></li><li class="L2"><code class="language-c++"><span class="pln">    </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">b </span><span class="pun">==</span><span class="pln"> </span><span class="lit">0</span><span class="pun">){</span></code></li><li class="L3"><code class="language-c++"><span class="pln">        x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L4"><code class="language-c++"><span class="pln">        y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></code></li><li class="L5"><code class="language-c++"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> a</span><span class="pun">;</span><span class="pln">   </span><span class="com">//a is the gcd</span></code></li><li class="L6"><code class="language-c++"><span class="pln">    </span><span class="pun">}</span><span class="kwd">else</span><span class="pun">{</span></code></li><li class="L7"><code class="language-c++"><span class="pln">        </span><span class="kwd">long</span><span class="pln"> ret </span><span class="pun">=</span><span class="pln"> gcdEX</span><span class="pun">(</span><span class="pln">b</span><span class="pun">,</span><span class="pln"> a </span><span class="pun">%</span><span class="pln"> b</span><span class="pun">,</span><span class="pln"> x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">);</span><span class="pln">   </span><span class="com">//recursive compute the value</span></code></li><li class="L8"><code class="language-c++"><span class="pln">        </span><span class="kwd">long</span><span class="pln"> tmp </span><span class="pun">=</span><span class="pln"> x</span><span class="pun">;</span><span class="pln">   </span></code></li><li class="L9"><code class="language-c++"><span class="pln">        x </span><span class="pun">=</span><span class="pln"> y</span><span class="pun">;</span><span class="pln">  </span><span class="com">//exchange</span></code></li><li class="L0"><code class="language-c++"><span class="pln">        y </span><span class="pun">=</span><span class="pln"> tmp </span><span class="pun">-</span><span class="pln"> a </span><span class="pun">/</span><span class="pln"> b </span><span class="pun">*</span><span class="pln"> y</span><span class="pun">;</span><span class="pln"> </span><span class="com">//exchange </span></code></li><li class="L1"><code class="language-c++"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> ret</span><span class="pun">;</span></code></li><li class="L2"><code class="language-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L3"><code class="language-c++"><span class="pun">}</span></code></li></ol></pre>
+
+<h3 id="title-10">5.2 快速模指运算</h3>
+
+<p>单纯先求出幂指数再进行求余的话，运行时间会变成非常大，且不得不要求写出大整数。使用快速模指运算可以提高运行效率，且无需进行大整数幂指数求解。当然，如果本身要求密钥长度很长，也是需要用到大整数的。</p>
+
+<pre class="prettyprint linenums prettyprinted"><ol class="linenums"><li class="L0"><code class="language-c++"><span class="com">//mode extend, compute the value of (a ^ n) % m</span></code></li><li class="L1"><code class="language-c++"><span class="kwd">long</span><span class="pln"> modeEx</span><span class="pun">(</span><span class="kwd">long</span><span class="pln"> a</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">long</span><span class="pln"> n</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">long</span><span class="pln"> m</span><span class="pun">)</span></code></li><li class="L2"><code class="language-c++"><span class="pun">{</span></code></li><li class="L3"><code class="language-c++"><span class="pln">    </span><span class="kwd">long</span><span class="pln"> ret </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L4"><code class="language-c++"></code></li><li class="L5"><code class="language-c++"><span class="pln">    </span><span class="kwd">while</span><span class="pun">(</span><span class="pln">n</span><span class="pun">){</span></code></li><li class="L6"><code class="language-c++"><span class="pln">        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">n </span><span class="pun">&amp;</span><span class="pln"> </span><span class="lit">0x01</span><span class="pun">){</span><span class="com">//if the last bit of n is 0x01</span></code></li><li class="L7"><code class="language-c++"><span class="pln">            ret </span><span class="pun">=</span><span class="pln"> ret </span><span class="pun">*</span><span class="pln"> a </span><span class="pun">%</span><span class="pln"> m</span><span class="pun">;</span><span class="com">//then compute this</span></code></li><li class="L8"><code class="language-c++"><span class="pln">        </span><span class="pun">}</span></code></li><li class="L9"><code class="language-c++"></code></li><li class="L0"><code class="language-c++"><span class="pln">        a </span><span class="pun">=</span><span class="pln"> a </span><span class="pun">*</span><span class="pln"> a </span><span class="pun">%</span><span class="pln"> m</span><span class="pun">;</span></code></li><li class="L1"><code class="language-c++"><span class="pln">        n </span><span class="pun">/=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span></code></li><li class="L2"><code class="language-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L3"><code class="language-c++"><span class="pln">    </span><span class="kwd">return</span><span class="pln"> ret</span><span class="pun">;</span></code></li><li class="L4"><code class="language-c++"><span class="pun">}</span></code></li></ol></pre>
+
+<h3 id="title-11">5.3 获取素数</h3>
+
+<p>一种比较有效的获取素数的方法是是使用<code>筛除法</code>，即将合数逐步过滤出，算法过程如下：</p>
+
+<pre class="prettyprint linenums prettyprinted"><ol class="linenums"><li class="L0"><code class="language-c++"><span class="kwd">long</span><span class="pln"> selectPrimeNum</span><span class="pun">(</span><span class="kwd">const</span><span class="pln"> </span><span class="kwd">long</span><span class="pln"> random</span><span class="pun">)</span></code></li><li class="L1"><code class="language-c++"><span class="pun">{</span></code></li><li class="L2"><code class="language-c++"><span class="pln">    std</span><span class="pun">::</span><span class="pln">vector</span><span class="str">&lt;char&gt;</span><span class="pln"> arr</span><span class="pun">(</span><span class="pln">random</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span></code></li><li class="L3"><code class="language-c++"><span class="pln">    </span><span class="com">//create a vector to store prime, it should be type of bool, but I don't know why it failed</span></code></li><li class="L4"><code class="language-c++"><span class="pln">    </span><span class="kwd">long</span><span class="pln"> sq </span><span class="pun">=</span><span class="pln"> sqrt</span><span class="pun">(</span><span class="pln">random</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L5"><code class="language-c++"></code></li><li class="L6"><code class="language-c++"><span class="pln">    </span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">long</span><span class="pln"> i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> sq</span><span class="pun">;</span><span class="pln"> </span><span class="pun">++</span><span class="pln">i</span><span class="pun">){</span></code></li><li class="L7"><code class="language-c++"><span class="pln">        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">arr</span><span class="pun">[</span><span class="pln">i</span><span class="pun">]</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="lit">0</span><span class="pun">){</span><span class="pln"> </span><span class="com">//if arr[i] is not a non_prime number, that make it true</span></code></li><li class="L8"><code class="language-c++"><span class="pln">            </span><span class="kwd">for</span><span class="pun">(</span><span class="kwd">long</span><span class="pln"> j </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span><span class="pln"> j </span><span class="pun">&lt;</span><span class="pln"> random</span><span class="pun">;</span><span class="pln"> </span><span class="pun">++</span><span class="pln">j</span><span class="pun">){</span></code></li><li class="L9"><code class="language-c++"><span class="pln">                </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">j </span><span class="pun">%</span><span class="pln"> i </span><span class="pun">==</span><span class="pln"> </span><span class="lit">0</span><span class="pln"> </span><span class="pun">&amp;&amp;</span><span class="pln"> j </span><span class="pun">!=</span><span class="pln"> i</span><span class="pun">){</span></code></li><li class="L0"><code class="language-c++"><span class="pln">                    arr</span><span class="pun">[</span><span class="pln">j</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">  </span><span class="com">//make it true</span></code></li><li class="L1"><code class="language-c++"><span class="pln">                </span><span class="pun">}</span></code></li><li class="L2"><code class="language-c++"><span class="pln">            </span><span class="pun">}</span></code></li><li class="L3"><code class="language-c++"><span class="pln">        </span><span class="pun">}</span></code></li><li class="L4"><code class="language-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L5"><code class="language-c++"><span class="pun">]</span></code></li></ol></pre>
+
+<p>一种改进的方法为欧拉筛除法，其思想是把确保合数只被过滤一次，而上述的方法则会被过滤多次，算法过程如下：</p>
+
+<pre class="prettyprint linenums prettyprinted"><ol class="linenums"><li class="L0"><code class="language-c++"><span class="kwd">int</span><span class="pln"> cnt </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></code></li><li class="L1"><code class="language-c++"><span class="kwd">for</span><span class="pun">(</span><span class="pln">i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;=</span><span class="pln"> n</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span></code></li><li class="L2"><code class="language-c++"><span class="pun">{</span></code></li><li class="L3"><code class="language-c++"><span class="pln">    </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">arr</span><span class="pun">[</span><span class="pln">i</span><span class="pun">]</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span></code></li><li class="L4"><code class="language-c++"><span class="pln">    </span><span class="pun">{</span></code></li><li class="L5"><code class="language-c++"><span class="pln">        prime</span><span class="pun">[++</span><span class="pln">cnt</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> i</span><span class="pun">;</span><span class="pln">   </span><span class="com">//record the prime number into array prime</span></code></li><li class="L6"><code class="language-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L7"><code class="language-c++"><span class="pln">    </span><span class="kwd">for</span><span class="pun">(</span><span class="pln">j </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln"> j </span><span class="pun">&lt;=</span><span class="pln"> cnt</span><span class="pun">;</span><span class="pln"> j</span><span class="pun">++)</span></code></li><li class="L8"><code class="language-c++"><span class="pln">    </span><span class="pun">{</span></code></li><li class="L9"><code class="language-c++"><span class="pln">        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">i </span><span class="pun">*</span><span class="pln"> prime</span><span class="pun">[</span><span class="pln">j</span><span class="pun">]</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> n</span><span class="pun">)</span></code></li><li class="L0"><code class="language-c++"><span class="pln">            </span><span class="kwd">break</span><span class="pun">;</span></code></li><li class="L1"><code class="language-c++"><span class="pln">        arr</span><span class="pun">[</span><span class="pln">i </span><span class="pun">*</span><span class="pln"> prime</span><span class="pun">[</span><span class="pln">j</span><span class="pun">]]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span></code></li><li class="L2"><code class="language-c++"><span class="pln">        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">i </span><span class="pun">%</span><span class="pln"> prime</span><span class="pun">[</span><span class="pln">j</span><span class="pun">]</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span></code></li><li class="L3"><code class="language-c++"><span class="pln">        </span><span class="com">//if (i % prime[j] == 0), then compute (i % prime[j + 1]) is redundant</span></code></li><li class="L4"><code class="language-c++"><span class="pln">            </span><span class="kwd">break</span><span class="pun">;</span></code></li><li class="L5"><code class="language-c++"><span class="pln">    </span><span class="pun">}</span></code></li><li class="L6"><code class="language-c++"><span class="pun">}</span></code></li></ol></pre>
+
+<h2 id="title-12">6 程序演示</h2>
+
+<ul>
+<li>初始界面</li>
+</ul>
+
+<p>初始界面与之前的<a href="http://blog.leanote.com/post/maple2snow/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E4%B9%8BPlayfair%E5%8F%8AHill%E7%AE%97%E6%B3%95">PlayFair算法</a>略有更改，新增了<code>RSA</code>加密选项，如下图所示。</p>
+
+<div align="center">
+    <img src="./RSA加密算法-maple2snow &#39;s Blog_files/getImage" title="初始界面">
+</div>
+
+<ul>
+<li>输入质数生成公钥和私钥</li>
+</ul>
+
+<p>在选择了<code>RSA</code>算法后，在<code>Key</code>处输入密钥<code>(61, 53)</code>，并点击<code>More Info</code>按钮，可以看到公钥和私钥生成情况。在此，生成的公钥e是随机选择的。</p>
+
+<div align="center">
+    <img src="./RSA加密算法-maple2snow &#39;s Blog_files/getImage(1)" title="输入质数生成公钥和私钥">
+</div>
+
+<ul>
+<li>加密</li>
+</ul>
+
+<p>在<code>Clear Text</code>框中，可以输入明文，在此输入<code>65</code>，点击<code>Encrypt</code>按钮，可以观察到<code>Cipher Text</code>框中显示密文<code>2730</code>。</p>
+
+<div align="center">
+    <img src="./RSA加密算法-maple2snow &#39;s Blog_files/getImage(2)" title="RSA加密">
+</div>
+
+<ul>
+<li>解密</li>
+</ul>
+
+<p>为看到解密效果，可以先将<code>Clear  Text</code>框中的内容清除，再点击<code>Decrypt</code>按钮，此时可以看到密文被解密为明文<code>65</code>。</p>
+
+<p>在加密时，可以输入一个整数值，表示随机生成在此整数值以下的素数，并依此生成公钥和私钥，在此就不作演示，可访问<a href="https://github.com/maple2snow/Encrypt">程序仓库</a>进行进一步实验。</p>
+
+<h2 id="title-13">7 总结</h2>
+
+<p>编写<code>RSA</code>算法最重要的步骤还是先弄清楚算法的数学底蕴。如果对算法所依赖的数学知识不熟悉的话，一切都会变得难以入手。在写程序时，参照了<a href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html">阮一峰的RSA算法原理</a>，浅显易懂的语言让我很快就对算法感到很清晰。尽管在课上讲过内容，但实际编写时还是忘记了细节。而那篇博客则从数学知识到算法过程都讲得很清楚，本篇博客也是吸收了他的例子精华。 <br>
+所以，还是要多多向高手学习，也要博览了。</p></div>
+        </div>
+    </div>
+
+
+
+    <div class="pre-next-post">
+        <div>
+            Pre: No Post
+        </div>
+        <div>
+            Next: <a href="http://blog.leanote.com/post/maple2snow/%E5%A4%B4%E6%96%87%E4%BB%B6">头文件</a>
+        </div>
+    </div>
+</div>
+
+<div class="topmark" id="topmark3"></div>
+
+
+
+
+
+
+
+
+
+
+<script type="text/x-jsrender" id="tComments">
+[[for comments]]
+  <li class="comment-item">
+    <!-- 头像 -->
+    <a ui-hovercard="" target="_blank" class="avatar-link" title="[[:UserInfo.Username]]" href="[[:UserInfo.BlogUrl]]">
+      <img class="avatar" src="[[:UserInfo.Logo]]">
+    </a>
+    <!-- 评论 -->
+    <div class="comment-body">
+      <div class="comment-hd">
+        <a href="[[:UserInfo.BlogUrl]]" target="_blank" >[[:UserInfo.Username]]</a>
+        [[if IsAuthorComment]]
+        <span>(Author)</span>
+        [[/if]]
+        
+        <!-- 回复其它人 -->
+        [[if ToUserInfo]]
+          <span class="in-reply-to">
+              reply to
+              <a href="[[:ToUserInfo.BlogUrl]]">[[:ToUserInfo.Username]]</a>
+          </span>
+          [[if ToUserIsAuthor]]
+          <span>(Author)</span>
+          [[/if]]
+        [[/if]]
+      </div>
+      <div class="comment-content">
+        [[html:Content]]
+      </div>
+      <div class="comment-ft clearfix" data-comment-id="[[:CommentId]]" >
+        <span title="" ui-time="" class="date">[[:PublishDate]] </span>
+        <span class="like-num [[if !LikeNum]]hide[[/if]]" title="[[:LikeNum]] likes"><span class="like-num-i">[[:LikeNum]]</span> likes</span></span>
+        
+        [[if ~root.visitUserInfo.UserId]]
+          [[if IsMyNote && !IsMyComment]]
+            <a href="javascript:;" class="comment-trash op-link "><i class="fa fa-trash"></i> Delete</a>
+          [[/if]]
+          [[if !IsMyComment]]
+          <a href="javascript:;" class="comment-reply op-link ">
+            <i class="fa fa-reply"></i>
+            Reply
+          </a>
+          <a href="javascript:;" class="comment-like op-link"><i class="fa fa-thumbs-o-up"></i> <span class="like-text">[[if IsILikeIt]]Unlike[[else]]Like[[/if]]</span></a>
+          [[else]]
+          <a href="javascript:;" class="comment-trash op-link "><i class="fa fa-trash"></i> Delete</a>
+          [[/if]]
+        [[/if]]
+      </div>
+      
+      <!-- 回复该评论 -->
+      [[if ~root.visitUserInfo.UserId]]
+      <form class="comment-form comment-box-ft">
+        <div class="clearfix">
+          <div class="avatar-wrap">
+            <img class="avatar" src="[[:~root.visitUserInfo.Logo]]">
+          </div>
+          <div class="editor-wrap">
+            <textarea class="editable" id="commentContent" name="commentContent" placeholder="Reply"></textarea>
+          </div>
+        </div>
+        
+        <div class="command clearfix" style="display: block;">
+          <button class="reply-comment-btn save btn btn-primary" data-comment-id="[[:CommentId]]">Submit</button>
+          <a class="cancel reply-cancel btn-link">Cancel</a>
+        </div>
+      </form>
+      [[/if]]
+    </div>
+  </li>
+[[/for]]
+</script>
+
+
+<div class="comment-box">
+  <form class="comment-form comment-box-ft" id="commentForm">
+    <div class="clearfix">
+      <div class="avatar-wrap">
+        <img class="avatar" id="visitUserLogo" src="./RSA加密算法-maple2snow &#39;s Blog_files/100">
+      </div>
+      <div class="editor-wrap">
+        <textarea class="editable" id="commentContent" name="commentContent" placeholder="Your comment here" style="height: 100px;"></textarea>
+      </div>
+    </div>
+    <div class="command clearfix" style="display: block;">
+      <button id="commentBtn" class="reply-comment-btn save btn btn-primary">Submit</button>
+    </div>
+  </form>
+  <div class="needLogin hide" id="noLoginContainer">
+    <a onclick="goLogin()">Sign in</a> to leave a comment.
+    <br>
+    No Leanote account? <a onclick="goRegister()">Sign up now.</a>
+  </div>
+  <div class="box-header">
+      <span class="counter">
+        <i class="icon icon-comment"></i><span id="commentNum">0</span> comments
+      </span>
+    </div>
+    
+  <ul id="comments">
+  </ul>
+</div>
+
+
+<div id="moreComments">
+  <div class="hide comments-more">
+    <a>More...</a>
+  </div>
+  <div class="comments-loading hide">
+    <img src="./RSA加密算法-maple2snow &#39;s Blog_files/loading-32.gif">
+  </div>
+</div>
+
+
+ 
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/jquery-1.9.0.min.js.下载"></script>
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/bootstrap-min.js.下载"></script>
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/bootstrap-hover-dropdown.js.下载"></script>
+<link href="./RSA加密算法-maple2snow &#39;s Blog_files/prettifycode.css" type="text/css" rel="stylesheet">
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/prettify.js.下载"></script>
+<script>
+$("pre").addClass("prettyprint linenums");
+prettyPrint();
+</script>
+
+</div>
+
+
+	<aside class="my-aside">
+
+
+<div id="beforeAffix">
+	<div class="widget widget-postinfo created-time sm-info">
+		<i class="fa fa-clock-o"></i>&nbsp;2016-11-23 17:33:22&nbsp;&nbsp;<br>
+		<span class="fa fa-eye"></span>&nbsp;0&nbsp;&nbsp;
+		<span class="fa fa-thumbs-o-up"></span>&nbsp;0&nbsp;&nbsp;
+		<span class="fa fa-comments-o"></span>&nbsp;0&nbsp;&nbsp;<br>
+		
+	</div>
+</div>
+
+<div class="topmark" id="topmark2"></div>
+
+<div id="theAffix" style="margin-top: 5088px;">
+<div class="widget widget-postnav" id="postNav" style="top: 10px;">
+    <h3 class="widget-title">Content</h3>
+    <div id="postNavContent"><ul><li class="nav-h1"><a data-a="h1-%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E4%B9%8BRSA" onclick="scrollTo(this, &#39;h1&#39;, &#39;加密算法之RSA&#39;)">加密算法之RSA</a></li><li class="nav-h2"><a data-a="h2-1%20RSA%E7%AE%97%E6%B3%95%E7%AE%80%E4%BB%8B" onclick="scrollTo(this, &#39;h2&#39;, &#39;1 RSA算法简介&#39;)">1 RSA算法简介</a></li><li class="nav-h2"><a data-a="h2-2%20%E5%85%AC%E9%92%A5%E5%AF%86%E9%92%A5%E5%AF%86%E7%A0%81%E4%BD%93%E5%88%B6%E5%9F%BA%E6%9C%AC%E5%90%AB%E4%B9%89" onclick="scrollTo(this, &#39;h2&#39;, &#39;2 公钥密钥密码体制基本含义&#39;)">2 公钥密钥密码体制基本含义</a></li><li class="nav-h2"><a data-a="h2-3%20%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90%E6%AD%A5%E9%AA%A4" onclick="scrollTo(this, &#39;h2&#39;, &#39;3 密钥生成步骤&#39;)">3 密钥生成步骤</a></li><li class="nav-h2"><a data-a="h2-4%20%E5%8A%A0%E5%AF%86%E5%92%8C%E8%A7%A3%E5%AF%86" onclick="scrollTo(this, &#39;h2&#39;, &#39;4 加密和解密&#39;)">4 加密和解密</a></li><li class="nav-h3"><a data-a="h3-4.1%20%E4%BD%BF%E7%94%A8%E5%85%AC%E9%92%A5%E5%8A%A0%E5%AF%86" onclick="scrollTo(this, &#39;h3&#39;, &#39;4.1 使用公钥加密&#39;)">4.1 使用公钥加密</a></li><li class="nav-h3"><a data-a="h3-4.2%20%E4%BD%BF%E7%94%A8%E7%A7%81%E9%92%A5%E8%A7%A3%E5%AF%86" onclick="scrollTo(this, &#39;h3&#39;, &#39;4.2 使用私钥解密&#39;)">4.2 使用私钥解密</a></li><li class="nav-h3"><a data-a="h3-4.3%20%E8%A1%A5%E5%85%85" onclick="scrollTo(this, &#39;h3&#39;, &#39;4.3 补充&#39;)">4.3 补充</a></li><li class="nav-h2"><a data-a="h2-5%20%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95%E4%BB%A3%E7%A0%81" onclick="scrollTo(this, &#39;h2&#39;, &#39;5 核心算法代码&#39;)">5 核心算法代码</a></li><li class="nav-h3"><a data-a="h3-5.1%20%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E7%AE%97%E6%B3%95" onclick="scrollTo(this, &#39;h3&#39;, &#39;5.1 扩展欧几里得算法&#39;)">5.1 扩展欧几里得算法</a></li><li class="nav-h3"><a data-a="h3-5.2%20%E5%BF%AB%E9%80%9F%E6%A8%A1%E6%8C%87%E8%BF%90%E7%AE%97" onclick="scrollTo(this, &#39;h3&#39;, &#39;5.2 快速模指运算&#39;)">5.2 快速模指运算</a></li><li class="nav-h3"><a data-a="h3-5.3%20%E8%8E%B7%E5%8F%96%E7%B4%A0%E6%95%B0" onclick="scrollTo(this, &#39;h3&#39;, &#39;5.3 获取素数&#39;)">5.3 获取素数</a></li><li class="nav-h2"><a data-a="h2-6%20%E7%A8%8B%E5%BA%8F%E6%BC%94%E7%A4%BA" onclick="scrollTo(this, &#39;h2&#39;, &#39;6 程序演示&#39;)">6 程序演示</a></li><li class="nav-h2"><a data-a="h2-7%20%E6%80%BB%E7%BB%93" onclick="scrollTo(this, &#39;h2&#39;, &#39;7 总结&#39;)">7 总结</a></li></ul></div>
+</div>
+<script type="text/javascript">
+var xxxxxxxxxxxxxxxxxx
+</script>
+</div>
+
+<div id="afterAffix">
+
+<div class="widget widget-zan entry-controls clearfix">
+	<div class="widget-zan-box1 vote-section-wrapper clearfix">
+		<button class="widget-zan-btn btn-zan" id="likeBtn"><i class="fa fa-thumbs-o-up"></i><br><span id="likeNum">0</span></button>
+	</div>
+	<div class="widget-zan-box2 right-section">
+		<div id="weixinQRCode"></div>
+		<div class="dropdown">
+			<button class="widget-zan-btn btn-weibo btn-share"><i class="fa fa-weibo"></i></button>
+			<button class="widget-zan-btn btn-weixin btn-default btn-share"><i class="fa fa-wechat"></i></button>
+			<button class="widget-zan-btn btn-more dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></button>
+			<ul class="dropdown-menu" role="menu" align="left">
+				<li><a href="http://blog.leanote.com/post/maple2snow/RSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95#" class="btn-share tencent-weibo"><i class="fa fa-tencent-weibo"></i>Tencent Weibo</a></li>
+				<li><a href="http://blog.leanote.com/post/maple2snow/RSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95#" class="btn-share qq"><i class="fa fa-qq"></i>QQ Zone</a></li>
+				<li><a href="http://blog.leanote.com/post/maple2snow/RSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95#" class="btn-share renren"><i class="fa fa-renren"></i>RenRen</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+</div>
+
+
+<script type="text/x-jsrender" id="tLikers" data-jsv-tmpl="_0">
+[[for users]]
+  <a id="liker_[[:UserId]]" title="[[:BlogTitle]]" href="[[:BlogUrl]]" target="_blank" class="voter">
+    [[if Logo]]
+      <img alt="avatar" class="avatar-small" src="[[:Logo]]">
+    [[else]]
+      <img alt="avatar" class="avatar-small" src="/images/blog/default_avatar.png">
+    [[/if]]
+  </a>
+[[/for]]
+</script>
+
+
+<style type="text/css">
+#theAffix{transition:all 0.5s;} 
+</style>
+
+<script type="text/javascript">
+$(window).scroll(function(){
+  var tops=$(window).scrollTop();
+  var hof_before=$("#beforeAffix").outerHeight(true);
+  var hof_post=$("#postsContainer").outerHeight();
+  var hof_affix=$("#theAffix").outerHeight();
+  var hof_after=$("#afterAffix").outerHeight();
+  var top1=$("#topmark1").offset().top;
+  var top2=$("#topmark2").offset().top;
+  var top3=$("#topmark3").offset().top;
+  var topd= top3 - hof_affix - hof_after;
+  var mtop=30;
+  var v1=0;
+  var v2=topd-top2;
+  var v3=tops-top2+mtop;
+  if(tops <= top2-mtop) {$("#theAffix").css("margin-top",v1)}
+  else if(tops >= topd-mtop) {$("#theAffix").css("margin-top",v2)}
+  else{$("#theAffix").css("margin-top",v3)}
+});
+</script>
+
+
+
+
+</aside>
+
+	
+
+
+
+
+
+<script>
+    var siteUrl = "http:\/\/leanote.com"; 
+    
+    var blogInfo={UserId: "5714981cab64415fa600045d", OpenComment:  true , CommentType: ""};
+    var noteId = "583546e4121ce1219b000001"; 
+    var preLikeNum = +"0";
+    var commentNum = +"0";
+</script>
+
+
+<link href="./RSA加密算法-maple2snow &#39;s Blog_files/share_comment.css" type="text/css" rel="stylesheet">
+
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/common.js.下载"></script>
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/0-s-fornav.js.下载"></script>
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/jsrender.js.下载"></script>
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/jquery-cookie-min.js.下载"></script>
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/bootstrap-dialog.min.js.下载"></script>
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/jquery.qrcode.min.js.下载"></script>
+
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/share_comment.js.下载"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="./RSA加密算法-maple2snow &#39;s Blog_files/md2html.js.下载"></script>
+<script>
+var content = $.trim($("#markdownContent textarea").val());
+md2Html(content, $("#content"), function(html) {
+    $("pre").addClass("prettyprint linenums");
+    prettyPrint();
+    initNav();
+    weixin();
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<footer class="my-footer">
+	<div>
+	Themed by <a href="http://roomcar.leanote.com/single/me">roomcar</a>
+	| Edited by <a href="http://leanote.com/preview/single/maple2snow/About-Me">maple</a>
+	| <span class="footer-leanote">Proudly powered by <a href="https://leanote.com/">Leanote</a>
+    | <a href="https://leanote.com/member/blog/theme" target="_blank"><i class="fa fa-cog"></i></a>
+    </span></div>
+</footer>
+<script>
+
+function search(e) {
+	var keywords = $("#searchInput").val();
+	if(!keywords) {
+		location.href = "http:\/\/blog.leanote.com\/search\/maple2snow";
+	} else {
+		var tpl = '<form action="http:\/\/blog.leanote.com\/search\/maple2snow" method="get">';
+		tpl += '<input name="keywords" value="' + keywords + '" />';
+		tpl += "</form";
+		$(tpl).submit();
+	}
+}
+</script>
+</div>
+
+
+
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden; padding: 0px; border: 0px; margin: 0px;"><div id="MathJax_Font_Test" style="position: absolute; visibility: hidden; top: 0px; left: 0px; width: auto; padding: 0px; border: 0px; margin: 0px; white-space: nowrap; text-align: left; text-indent: 0px; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; font-size: 40px; font-weight: normal; font-style: normal; font-family: MathJax_Main, sans-serif;"></div></div></body><div></div></html>

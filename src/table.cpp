@@ -68,9 +68,9 @@ void PlayTable::AddItem(RSA &rsa)
     this->clear();
 
     for(int j = 0; j < 6; ++j)
-        this->setColumnWidth(j, 30);
+        this->setColumnWidth(j, 40);
 
-    this->setColumnWidth(3, 40);
+    //this->setColumnWidth(3, 40);
 
     QString txt;
 
