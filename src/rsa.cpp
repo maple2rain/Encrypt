@@ -7,7 +7,7 @@
 
 long RSA::selectPrimeNum(const long random)
 {
-    std::vector<char> arr(random, 0);
+    std::vector<bool> arr(random, 0);
     long sq = sqrt(random) + 1;
 
     for (long i = 2; i < sq; ++i){
